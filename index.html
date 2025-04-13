@@ -32,39 +32,19 @@
       background: #ff4d4d;
     }
 
-.laser-text {
-  text-shadow: 0 0 8px red, 0 0 12px #ff0000;
-  color: #ff4d4d;
-}
-
-    #custom-cursor {
-      position: fixed;
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      background-color: white;
-      pointer-events: none;
-      z-index: 9999;
-      box-shadow: 0 0 8px white, 0 0 15px red;
+    .header-title {
+      font-size: 4rem; /* Large text */
+      font-weight: bold;
+      text-align: center;
+      color: white;
+      text-transform: uppercase;
     }
 
-    .particle {
-      position: fixed;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: white;
-      pointer-events: none;
-      opacity: 0.8;
-      z-index: 9998;
-      animation: fall 1.5s linear forwards;
-    }
-
-    @keyframes fall {
-      to {
-        transform: translateY(80px);
-        opacity: 0;
-      }
+    .header-subtitle {
+      font-size: 1.25rem; /* Smaller text */
+      font-weight: bold;
+      text-align: center;
+      color: #ff4d4d;
     }
 
     .discord-link {
@@ -85,36 +65,29 @@
       75% { transform: translate(2px, 2px); }
       100% { transform: translate(0, 0); }
     }
-
-    *:hover {
-      cursor: none !important;
-    }
   </style>
 </head>
-<body class="min-h-screen text-white font-sans">
-  <div id="custom-cursor"></div>
-  <div class="animated-header p-6 border-b-4 border-red-700 shadow-2xl">
-    <div class="flex flex-col lg:flex-row justify-between items-center gap-6">
-<div class="flex flex-col gap-2 font-[Orbitron] mt-2">
-  <p class="text-2xl text-white font-semibold">
-    ⚡ Powered by the <span class="text-red-400 font-extrabold">Sazurn Hub</span> team — <span class="text-red-500">May the scripts be with you.</span>
-  </p>
-  <p class="text-xl text-red-300">
-    Join our Discord for updates!<br>
-    <a href="https://discord.gg/hF8B9k8aed" target="_blank" class="discord-link text-red-400 hover:text-white transition duration-300">https://discord.gg/hF8B9k8aed</a>
-  </p>
-</div>
-      <div class="w-full lg:w-1/2">
-        <input id="searchInput" type="text" placeholder="🔍 Search galactic scripts..."
-          class="w-full px-5 py-3 rounded-xl bg-gray-950 text-white placeholder-gray-400 text-lg focus:outline-none focus:ring-2 focus:ring-red-500 shadow-lg" />
+  <body>
+    <div class="animated-header p-6 border-b-4 border-red-700 shadow-2xl">
+      <div class="flex flex-col gap-4">
+        <div class="header-title">
+          Sazurn Hub
+        </div>
+        <div class="header-subtitle">
+          ⚡ Powered by the Sazurn Hub team — May the scripts be with you.
+        </div>
+        <div class="text-center mt-2">
+          <p class="text-lg">
+            Join our Community for updates!<br>
+            <a href="https://discord.gg/hF8B9k8aed" target="_blank" class="discord-link text-red-400 hover:text-white transition duration-300">
+              https://discord.gg/hF8B9k8aed
+            </a>
+          </p>
+        </div>
       </div>
     </div>
-    <div class="text-center mt-4 text-xl font-bold laser-text text-red-500">
-      🚀 Transmission: All systems green. New starfighter scripts launching this week.
-    </div>
-  </div>
 
-  <div id="scriptContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-8 py-12">
+    <div id="scriptContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-8 py-12">
   </div>
 
   <script>
