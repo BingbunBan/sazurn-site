@@ -9,12 +9,11 @@
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(-45deg, #000000, #1a1a1a, #000000, #1a0000);
+      background: linear-gradient(-45deg, #330000, #660000, #330000, #1a0000);
       background-size: 400% 400%;
       animation: gradientMove 12s ease infinite;
       color: white;
       cursor: none;
-      overflow: hidden;
     }
 
     .animated-header {
@@ -105,33 +104,6 @@
     *:hover {
       cursor: none !important;
     }
-
-    /* Floating and spinning stars */
-    .star {
-      position: absolute;
-      background-color: white;
-      border-radius: 50%;
-      opacity: 0.8;
-      animation: floatAndSpin 15s infinite linear;
-    }
-
-    @keyframes floatAndSpin {
-      0% {
-        transform: translateY(-10px) rotate(0deg);
-      }
-      100% {
-        transform: translateY(100vh) rotate(360deg);
-      }
-    }
-
-    .main-background {
-      position: relative;
-      width: 100vw;
-      height: 100vh;
-      background: linear-gradient(to bottom, #000, #333);
-      overflow: hidden;
-    }
-
   </style>
 </head>
 <body class="min-h-screen text-white font-sans">
@@ -160,12 +132,12 @@
           </p>
         </div>
         <div class="w-full lg:w-1/2">
-          <input id="searchInput" type="text" placeholder="🔍 Search Sazurn scripts..."
+          <input id="searchInput" type="text" placeholder="🔍 Search galactic scripts..."
             class="w-full px-5 py-3 rounded-xl bg-gray-950 text-white placeholder-gray-400 text-lg focus:outline-none focus:ring-2 focus:ring-red-500 shadow-lg" />
         </div>
       </div>
       <div class="text-center mt-4 text-xl font-bold laser-text text-red-500">
-        
+        🪐Roblox may be full of green. New green starfighter scripts launching this week.
       </div>
     </div>
 
@@ -197,7 +169,7 @@
     const interval = setInterval(() => {
       percent++;
       progressBar.style.width = percent + '%';
-      loadingText.textContent = Loading... ${percent}%;
+      loadingText.textContent = `Loading... ${percent}%`;
 
       const dust = document.createElement('div');
       dust.className = 'dust';
@@ -267,7 +239,7 @@ Use good exc to not get detected.`,
         title: "MIMIC",
         description: ``,
         status: "Working",
-        code:  `loadstring(game:HttpGet("https://raw.githubusercontent.com/eldiazzz/mimicShit/c5897ae79ee9bc2df00c22b0aeb2d60862808961/Mimic"))()``
+        code:  `loadstring(game:HttpGet("https://raw.githubusercontent.com/eldiazzz/mimicShit/c5897ae79ee9bc2df00c22b0aeb2d60862808961/Mimic"))()`
       },
       {
         title: "RF FREE",
@@ -291,14 +263,14 @@ Use good exc to not get detected.`,
 
           const statusColor = script.status === 'Working' ? 'text-green-400' : script.status === 'Patched' ? 'text-red-400' : 'text-yellow-400';
 
-          card.innerHTML = 
+          card.innerHTML = `
             <h2 class="text-2xl font-bold laser-text mb-1">${script.title}</h2>
             <p class="text-gray-300">${script.description}</p>
             <p class="text-sm ${statusColor} mt-1">Status: ${script.status}</p>
             <textarea readonly class="bg-zinc-900 p-3 mt-3 rounded-md text-sm text-white w-full h-28 border border-red-600 resize-none font-mono">${script.code}</textarea>
             <button data-index="${index}" class="copyBtn mt-3 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg shadow-lg">Copy Script</button>
             <span id="copied-${index}" class="text-green-400 text-sm mt-1 hidden block">Copied!</span>
-          ;
+          `;
           container.appendChild(card);
         });
 
@@ -306,7 +278,7 @@ Use good exc to not get detected.`,
         btn.addEventListener('click', () => {
           const index = btn.getAttribute('data-index');
           navigator.clipboard.writeText(scripts[index].code).then(() => {
-            const copiedText = document.getElementById(copied-${index});
+            const copiedText = document.getElementById(`copied-${index}`);
             copiedText.classList.remove('hidden');
             setTimeout(() => copiedText.classList.add('hidden'), 1500);
           });
