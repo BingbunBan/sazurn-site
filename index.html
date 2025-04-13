@@ -9,7 +9,8 @@
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  color: white;
+  background-color: white;  /* Keep the main screen background white */
+  color: black;  /* Set text color to black for readability on the white background */
   cursor: none;
 }
 
@@ -17,6 +18,11 @@ body {
   background: linear-gradient(-45deg, #000000, #333333, #000000, #1a1a1a);
   background-size: 400% 400%;
   animation: gradientMove 12s ease infinite;
+  height: 100px; /* Adjust the height as needed */
+  position: fixed; /* Makes the header stick to the top */
+  top: 0;
+  width: 100%;
+  z-index: 100; /* Keeps it on top */
 }
 
 @keyframes gradientMove {
@@ -24,6 +30,7 @@ body {
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
+
 
 
     ::selection {
