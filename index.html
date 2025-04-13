@@ -107,16 +107,23 @@
   </style>
 </head>
 <body class="min-h-screen text-white font-sans">
-   <div style="width: 100%; max-width: 700px; margin: 0 auto;">
-<iframe 
-  style="display:none;" 
-  width="0" 
-  height="0" 
-  scrolling="no" 
-  frameborder="no" 
-  allow="autoplay" 
-  src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1646784432&auto_play=true&show_artwork=false&visual=false">
 
+    <script src="https://w.soundcloud.com/player/api.js"></script>
+
+  <iframe 
+    id="sc-player"
+    src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1646784432&auto_play=false"
+    allow="autoplay"
+    style="display: none;"></iframe>
+
+  <script>
+    const iframe = document.getElementById('sc-player');
+    const widget = SC.Widget(iframe);
+
+    widget.bind(SC.Widget.Events.READY, function () {
+      widget.setVolume(100);
+      widget.play();
+    });
   
   <div id="custom-cursor"></div>
 
