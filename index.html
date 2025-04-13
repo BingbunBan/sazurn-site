@@ -149,7 +149,7 @@
   </div>
 
   <!-- Main Content -->
-  <div id="mainContent" class="hidden main-background">
+  <div id="mainContent" class="hidden">
     <div class="animated-header p-6 border-b-4 border-red-700 shadow-2xl">
       <div class="flex flex-col lg:flex-row justify-between items-center gap-6">
         <div class="flex flex-col gap-1">
@@ -173,21 +173,6 @@
   </div>
 
   <script>
-    // Create random stars
-    const mainBackground = document.querySelector('.main-background');
-    const numberOfStars = 100;
-
-    for (let i = 0; i < numberOfStars; i++) {
-      const star = document.createElement('div');
-      star.classList.add('star');
-      star.style.width = Math.random() * 3 + 'px';
-      star.style.height = star.style.width;
-      star.style.top = Math.random() * 100 + 'vh';
-      star.style.left = Math.random() * 100 + 'vw';
-      star.style.animationDuration = (Math.random() * 10 + 10) + 's';
-      mainBackground.appendChild(star);
-    }
-
     const cursor = document.getElementById('custom-cursor');
     document.addEventListener('mousemove', e => {
       cursor.style.left = e.clientX + 'px';
@@ -232,7 +217,7 @@
         }, { once: true });
       }
     }, 30);
-    
+
     const scripts = [
       {
         title: "Arise Crossover",
@@ -292,6 +277,7 @@ Use good exc to not get detected.`,
       }
     ];
     
+
     const container = document.getElementById('scriptContainer');
     const searchInput = document.getElementById('searchInput');
 
@@ -309,8 +295,9 @@ Use good exc to not get detected.`,
             <h2 class="text-2xl font-bold laser-text mb-1">${script.title}</h2>
             <p class="text-gray-300">${script.description}</p>
             <p class="text-sm ${statusColor} mt-1">Status: ${script.status}</p>
-            <textarea readonly class="bg-zinc-900 p-3 mt-3 rounded-md text-sm text-white w-full h-16">${script.code}</textarea>
-            <button onclick="runScript(${index})" class="mt-4 bg-red-600 text-white py-2 px-4 rounded-lg w-full hover:bg-red-700 transition">Run Script</button>
+            <textarea readonly class="bg-zinc-900 p-3 mt-3 rounded-md text-sm text-white w-full h-28 border border-red-600 resize-none font-mono">${script.code}</textarea>
+            <button data-index="${index}" class="copyBtn mt-3 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg shadow-lg">Copy Script</button>
+            <span id="copied-${index}" class="text-green-400 text-sm mt-1 hidden block">Copied!</span>
           `;
           container.appendChild(card);
         });
