@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sazurn Hub</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -67,6 +67,21 @@
       }
     }
 
+    .dust {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: red;
+      opacity: 0.8;
+      animation: dustMove 3s linear infinite;
+    }
+
+    @keyframes dustMove {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-40px); opacity: 0; }
+    }
+
     .discord-link {
       color: #f87171;
       text-decoration: underline;
@@ -89,49 +104,92 @@
     *:hover {
       cursor: none !important;
     }
-
-    #loadingOverlay {
-      transition: opacity 0.5s ease-in-out;
-    }
   </style>
 </head>
 <body class="min-h-screen text-white font-sans">
   <div id="custom-cursor"></div>
 
-  <!-- Loading Screen Overlay -->
-  <div id="loadingOverlay" class="fixed top-0 left-0 w-full h-full bg-black flex flex-col items-center justify-center z-[9999] text-center">
-    <h1 class="text-6xl font-extrabold laser-text mb-6">Sazurn Hub</h1>
-    <div class="w-2/3 bg-zinc-800 rounded-xl overflow-hidden h-6">
-      <div id="progressBar" class="bg-red-600 h-full w-0 transition-all duration-300"></div>
+  <!-- Loading Screen -->
+  <div id="loadingScreen" class="fixed inset-0 flex flex-col items-center justify-center bg-black z-50">
+    <h1 class="text-6xl font-extrabold laser-text mb-8">Sazurn Hub</h1>
+    <div class="w-2/3 h-5 bg-gray-800 rounded-full overflow-hidden relative">
+      <div id="progressBar" class="h-full bg-red-600 laser-text text-transparent transition-all duration-75" style="width: 0%"></div>
+      <div id="dustParticles"></div>
     </div>
-    <p id="loadingStatus" class="mt-6 text-xl font-semibold text-red-400">Loading... 0%</p>
-    <p id="continuePrompt" class="mt-4 text-lg font-bold laser-text hidden animate-pulse">Click to Continue...</p>
+    <p id="loadingText" class="text-xl mt-6 font-bold text-red-400">Loading...</p>
+    <p id="clickContinue" class="mt-8 text-2xl font-extrabold laser-text hidden">Click to Continue...</p>
   </div>
 
-  <div class="animated-header p-6 border-b-4 border-red-700 shadow-2xl">
-    <div class="flex flex-col lg:flex-row justify-between items-center gap-6">
-      <div class="flex flex-col gap-1">
-        <h1 class="text-5xl font-extrabold laser-text">Sazurn Hub</h1>
-        <p class="text-base text-red-400 font-medium">⚡ Powered by the <span class="font-semibold">Sazurn Hub</span> team — May the scripts be with you.</p>
-        <p class="text-lg">Join our Discord for updates!
-          <a href="https://discord.gg/hF8B9k8aed" target="_blank" class="discord-link ml-1">https://discord.gg/hF8B9k8aed</a>
-        </p>
+  <!-- Main Content -->
+  <div id="mainContent" class="hidden">
+    <div class="animated-header p-6 border-b-4 border-red-700 shadow-2xl">
+      <div class="flex flex-col lg:flex-row justify-between items-center gap-6">
+        <div class="flex flex-col gap-1">
+          <h1 class="text-5xl font-extrabold laser-text">Sazurn Hub</h1>
+          <p class="text-base text-red-400 font-medium">⚡ Powered by the <span class="font-semibold">Sazurn Hub</span> team — May the scripts be with you.</p>
+          <p class="text-lg">Join our Discord for updates!
+            <a href="https://discord.gg/hF8B9k8aed" target="_blank" class="discord-link ml-1">https://discord.gg/hF8B9k8aed</a>
+          </p>
+        </div>
+        <div class="w-full lg:w-1/2">
+          <input id="searchInput" type="text" placeholder="🔍 Search galactic scripts..."
+            class="w-full px-5 py-3 rounded-xl bg-gray-950 text-white placeholder-gray-400 text-lg focus:outline-none focus:ring-2 focus:ring-red-500 shadow-lg" />
+        </div>
       </div>
-      <div class="w-full lg:w-1/2">
-        <input id="searchInput" type="text" placeholder="🔍 Search galactic scripts..."
-          class="w-full px-5 py-3 rounded-xl bg-gray-950 text-white placeholder-gray-400 text-lg focus:outline-none focus:ring-2 focus:ring-red-500 shadow-lg" />
+      <div class="text-center mt-4 text-xl font-bold laser-text text-red-500">
+        🪐Roblox may be full of green. New green starfighter scripts launching this week.
       </div>
     </div>
-    <div class="text-center mt-4 text-xl font-bold laser-text text-red-500">
-      🚀 Transmission: All systems green. New starfighter scripts launching this week.
-    </div>
-  </div>
 
-  <div id="scriptContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-8 py-12">
-    <!-- Dynamic Cards -->
+    <div id="scriptContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-8 py-12"></div>
   </div>
 
   <script>
+    const cursor = document.getElementById('custom-cursor');
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+      const p = document.createElement('div');
+      p.className = 'particle';
+      p.style.left = e.clientX + 'px';
+      p.style.top = e.clientY + 'px';
+      document.body.appendChild(p);
+      setTimeout(() => p.remove(), 1000);
+    });
+
+    // Loading animation
+    const loadingScreen = document.getElementById('loadingScreen');
+    const progressBar = document.getElementById('progressBar');
+    const loadingText = document.getElementById('loadingText');
+    const clickContinue = document.getElementById('clickContinue');
+    const mainContent = document.getElementById('mainContent');
+    const dustParticles = document.getElementById('dustParticles');
+
+    let percent = 0;
+    const interval = setInterval(() => {
+      percent++;
+      progressBar.style.width = percent + '%';
+      loadingText.textContent = `Loading... ${percent}%`;
+
+      const dust = document.createElement('div');
+      dust.className = 'dust';
+      dust.style.left = (percent * 1.8) + '%';
+      dust.style.top = Math.random() * 20 + 'px';
+      dustParticles.appendChild(dust);
+      setTimeout(() => dust.remove(), 1500);
+
+      if (percent >= 100) {
+        clearInterval(interval);
+        loadingText.innerHTML = '<span class="laser-text text-2xl">Sazurn Hub ready to Broke Roblox</span>';
+        clickContinue.classList.remove('hidden');
+        document.body.addEventListener('click', () => {
+          loadingScreen.classList.add('hidden');
+          mainContent.classList.remove('hidden');
+          document.body.style.cursor = 'default';
+        }, { once: true });
+      }
+    }, 30);
+
     const scripts = [
       {
         title: "Force Fly",
@@ -191,47 +249,6 @@
 
     searchInput.addEventListener('input', e => renderScripts(e.target.value));
     renderScripts();
-
-    // Custom cursor + trailing particles
-    const cursor = document.getElementById('custom-cursor');
-    document.addEventListener('mousemove', e => {
-      cursor.style.left = e.clientX + 'px';
-      cursor.style.top = e.clientY + 'px';
-      createParticle(e.clientX, e.clientY);
-    });
-
-    function createParticle(x, y) {
-      const p = document.createElement('div');
-      p.className = 'particle';
-      p.style.left = x + 'px';
-      p.style.top = y + 'px';
-      document.body.appendChild(p);
-      setTimeout(() => p.remove(), 1000);
-    }
-
-    // Simulated loading logic
-    let progress = 0;
-    const progressBar = document.getElementById('progressBar');
-    const loadingStatus = document.getElementById('loadingStatus');
-    const continuePrompt = document.getElementById('continuePrompt');
-    const overlay = document.getElementById('loadingOverlay');
-
-    const interval = setInterval(() => {
-      progress += 1;
-      progressBar.style.width = `${progress}%`;
-      loadingStatus.textContent = `Loading... ${progress}%`;
-      if (progress >= 100) {
-        clearInterval(interval);
-        loadingStatus.textContent = 'Sazurn Hub ready to Broke Roblox';
-        continuePrompt.classList.remove('hidden');
-
-        overlay.addEventListener('click', () => {
-          overlay.classList.add('opacity-0');
-          overlay.classList.add('pointer-events-none');
-          setTimeout(() => overlay.remove(), 500);
-        });
-      }
-    }, 30);
   </script>
 </body>
 </html>
