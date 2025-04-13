@@ -6,138 +6,232 @@
   <title>Sazurn Hub</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    /* Basic page setup */
-    body, html {
-      height: 100%;
+    body {
       margin: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(-45deg, #330000, #660000, #330000, #1a0000);
+      background-size: 400% 400%;
+      animation: gradientMove 12s ease infinite;
       color: white;
-      overflow: hidden;
+      cursor: none;
     }
 
-    /* Loading screen styles */
-    .loading-screen {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      text-align: center;
-      z-index: 9999;
-      background-color: #1a0000;
+    .animated-header {
+      background: linear-gradient(-45deg, #330000, #660000, #330000, #1a0000);
+      background-size: 400% 400%;
+      animation: gradientMove 12s ease infinite;
     }
 
-    /* Progress bar container */
-    .progress-container {
-      width: 80%;
-      height: 25px;
-      background-color: #444;
-      border-radius: 12px;
-      margin-top: 30px;
-      overflow: hidden;
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
-    /* Progress bar itself */
-    .progress-bar {
-      width: 1%;
-      height: 100%;
-      background-color: #ff4d4d;
-      transition: width 3s ease-in-out;
+    ::selection {
+      background: #ff4d4d;
     }
 
-    /* Main screen styles */
-    .main-screen {
-      display: none; /* Initially hidden */
-    }
-
-    /* Saber (neon) text effect */
     .laser-text {
-      text-shadow: 0 0 12px red, 0 0 24px #ff0000, 0 0 36px #ff4d4d;
-      font-weight: bold;
+      text-shadow: 0 0 12px red, 0 0 24px #ff0000;
       color: #ff4d4d;
     }
 
-    /* "Click to Continue" message when progress is complete */
-    .click-to-continue {
-      display: none;
-      font-size: 20px;
-      font-weight: bold;
-      margin-top: 15px;
+    #custom-cursor {
+      position: fixed;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background-color: white;
+      pointer-events: none;
+      z-index: 9999;
+      box-shadow: 0 0 8px white, 0 0 15px red;
     }
 
+    .particle {
+      position: fixed;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: white;
+      pointer-events: none;
+      opacity: 0.8;
+      z-index: 9998;
+      animation: fall 1.5s linear forwards;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(80px);
+        opacity: 0;
+      }
+    }
+
+    .discord-link {
+      color: #f87171;
+      text-decoration: underline;
+      transition: all 0.3s ease-in-out;
+      display: inline-block;
+    }
+
+    .discord-link:hover {
+      animation: diagonalShake 0.4s ease-in-out;
+    }
+
+    @keyframes diagonalShake {
+      0% { transform: translate(0, 0); }
+      25% { transform: translate(3px, 3px); }
+      50% { transform: translate(-3px, -3px); }
+      75% { transform: translate(2px, 2px); }
+      100% { transform: translate(0, 0); }
+    }
+
+    *:hover {
+      cursor: none !important;
+    }
+
+    #loadingOverlay {
+      transition: opacity 0.5s ease-in-out;
+    }
   </style>
 </head>
-<body>
-  <!-- Loading Screen -->
-  <div id="loadingScreen" class="loading-screen">
-    <h1 class="text-5xl font-extrabold laser-text">Sazurn Hub</h1>
-    <p class="text-lg mt-4 laser-text">Loading...</p>
-    <div class="progress-container">
-      <div id="progressBar" class="progress-bar"></div>
+<body class="min-h-screen text-white font-sans">
+  <div id="custom-cursor"></div>
+
+  <!-- Loading Screen Overlay -->
+  <div id="loadingOverlay" class="fixed top-0 left-0 w-full h-full bg-black flex flex-col items-center justify-center z-[9999] text-center">
+    <h1 class="text-6xl font-extrabold laser-text mb-6">Sazurn Hub</h1>
+    <div class="w-2/3 bg-zinc-800 rounded-xl overflow-hidden h-6">
+      <div id="progressBar" class="bg-red-600 h-full w-0 transition-all duration-300"></div>
     </div>
-    <p id="loadingText" class="mt-4 laser-text">Sazurn Hub ready to Broke Roblox</p>
-    <p id="clickToContinue" class="click-to-continue laser-text">Click to Continue...</p>
+    <p id="loadingStatus" class="mt-6 text-xl font-semibold text-red-400">Loading... 0%</p>
+    <p id="continuePrompt" class="mt-4 text-lg font-bold laser-text hidden animate-pulse">Click to Continue...</p>
   </div>
 
-  <!-- Main Screen (content) -->
-  <div id="mainScreen" class="main-screen">
-    <div class="animated-header p-6 border-b-4 border-red-700 shadow-2xl">
-      <div class="flex flex-col lg:flex-row justify-between items-center gap-6">
-        <div class="flex flex-col gap-1">
-          <h1 class="text-5xl font-extrabold laser-text">Sazurn Hub</h1>
-          <p class="text-base text-red-400 font-medium">⚡ Powered by the <span class="font-semibold">Sazurn Hub</span> team — May the scripts be with you.</p>
-          <p class="text-lg">Join our Discord for updates!
-            <a href="https://discord.gg/hF8B9k8aed" target="_blank" class="discord-link ml-1">https://discord.gg/hF8B9k8aed</a>
-          </p>
-        </div>
-        <div class="w-full lg:w-1/2">
-          <input id="searchInput" type="text" placeholder="🔍 Search galactic scripts..."
-            class="w-full px-5 py-3 rounded-xl bg-gray-950 text-white placeholder-gray-400 text-lg focus:outline-none focus:ring-2 focus:ring-red-500 shadow-lg" />
-        </div>
+  <div class="animated-header p-6 border-b-4 border-red-700 shadow-2xl">
+    <div class="flex flex-col lg:flex-row justify-between items-center gap-6">
+      <div class="flex flex-col gap-1">
+        <h1 class="text-5xl font-extrabold laser-text">Sazurn Hub</h1>
+        <p class="text-base text-red-400 font-medium">⚡ Powered by the <span class="font-semibold">Sazurn Hub</span> team — May the scripts be with you.</p>
+        <p class="text-lg">Join our Discord for updates!
+          <a href="https://discord.gg/hF8B9k8aed" target="_blank" class="discord-link ml-1">https://discord.gg/hF8B9k8aed</a>
+        </p>
       </div>
-      <div class="text-center mt-4 text-xl font-bold laser-text text-red-500">
-        🚀 Transmission: All systems green. New starfighter scripts launching this week.
+      <div class="w-full lg:w-1/2">
+        <input id="searchInput" type="text" placeholder="🔍 Search galactic scripts..."
+          class="w-full px-5 py-3 rounded-xl bg-gray-950 text-white placeholder-gray-400 text-lg focus:outline-none focus:ring-2 focus:ring-red-500 shadow-lg" />
       </div>
     </div>
-    <div id="scriptContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-8 py-12">
-      <!-- Dynamic Cards -->
+    <div class="text-center mt-4 text-xl font-bold laser-text text-red-500">
+      🚀 Transmission: All systems green. New starfighter scripts launching this week.
     </div>
+  </div>
+
+  <div id="scriptContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-8 py-12">
+    <!-- Dynamic Cards -->
   </div>
 
   <script>
-    // Show loading screen and handle progress bar
-    let progressBar = document.getElementById("progressBar");
-    let loadingScreen = document.getElementById("loadingScreen");
-    let mainScreen = document.getElementById("mainScreen");
-    let clickToContinue = document.getElementById("clickToContinue");
-
-    // Progress bar logic (3 seconds to fill)
-    setTimeout(function() {
-      progressBar.style.width = "100%";
-    }, 100); // Initial delay for the loading screen
-
-    // Show "Click to Continue" when progress bar reaches 100%
-    setTimeout(function() {
-      if (progressBar.style.width === "100%") {
-        clickToContinue.style.display = "block"; // Show click message
+    const scripts = [
+      {
+        title: "Force Fly",
+        description: "Ascend like a Jedi across the map.",
+        status: "Working",
+        code: "loadstring(\"-- fly script here\")()"
+      },
+      {
+        title: "Sith ESP",
+        description: "Feel the presence of enemies behind walls.",
+        status: "Patched",
+        code: "loadstring(\"-- esp script\")()"
+      },
+      {
+        title: "Lightsaber Aimbot",
+        description: "Auto-lock saber swings on your foes.",
+        status: "Working",
+        code: "loadstring(\"-- aimbot script\")()"
       }
-    }, 3000); // After 3 seconds when the bar is fully loaded
+    ];
 
-    // Listen for clicks on the page to transition to the main screen
-    document.body.addEventListener("click", function() {
-      // Transition only when progress is 100%
-      if (progressBar.style.width === "100%") {
-        loadingScreen.style.display = "none"; // Hide loading screen
-        mainScreen.style.display = "block"; // Show main screen
-      }
+    const container = document.getElementById('scriptContainer');
+    const searchInput = document.getElementById('searchInput');
+
+    function renderScripts(filter = '') {
+      container.innerHTML = '';
+      scripts
+        .filter(s => s.title.toLowerCase().includes(filter.toLowerCase()) || s.description.toLowerCase().includes(filter.toLowerCase()))
+        .forEach((script, index) => {
+          const card = document.createElement('div');
+          card.className = "bg-black/60 backdrop-blur-xl border border-red-700 rounded-2xl p-6 shadow-2xl hover:scale-[1.02] transition-transform duration-300";
+
+          const statusColor = script.status === 'Working' ? 'text-green-400' : script.status === 'Patched' ? 'text-red-400' : 'text-yellow-400';
+
+          card.innerHTML = `
+            <h2 class="text-2xl font-bold laser-text mb-1">${script.title}</h2>
+            <p class="text-gray-300">${script.description}</p>
+            <p class="text-sm ${statusColor} mt-1">Status: ${script.status}</p>
+            <textarea readonly class="bg-zinc-900 p-3 mt-3 rounded-md text-sm text-white w-full h-28 border border-red-600 resize-none font-mono">${script.code}</textarea>
+            <button data-index="${index}" class="copyBtn mt-3 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg shadow-lg">Copy</button>
+            <span id="copied-${index}" class="text-green-400 text-sm mt-1 hidden block">Copied!</span>
+          `;
+          container.appendChild(card);
+        });
+
+      document.querySelectorAll('.copyBtn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const index = btn.getAttribute('data-index');
+          navigator.clipboard.writeText(scripts[index].code).then(() => {
+            const copiedText = document.getElementById(`copied-${index}`);
+            copiedText.classList.remove('hidden');
+            setTimeout(() => copiedText.classList.add('hidden'), 1500);
+          });
+        });
+      });
+    }
+
+    searchInput.addEventListener('input', e => renderScripts(e.target.value));
+    renderScripts();
+
+    // Custom cursor + trailing particles
+    const cursor = document.getElementById('custom-cursor');
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+      createParticle(e.clientX, e.clientY);
     });
+
+    function createParticle(x, y) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      p.style.left = x + 'px';
+      p.style.top = y + 'px';
+      document.body.appendChild(p);
+      setTimeout(() => p.remove(), 1000);
+    }
+
+    // Simulated loading logic
+    let progress = 0;
+    const progressBar = document.getElementById('progressBar');
+    const loadingStatus = document.getElementById('loadingStatus');
+    const continuePrompt = document.getElementById('continuePrompt');
+    const overlay = document.getElementById('loadingOverlay');
+
+    const interval = setInterval(() => {
+      progress += 1;
+      progressBar.style.width = `${progress}%`;
+      loadingStatus.textContent = `Loading... ${progress}%`;
+      if (progress >= 100) {
+        clearInterval(interval);
+        loadingStatus.textContent = 'Sazurn Hub ready to Broke Roblox';
+        continuePrompt.classList.remove('hidden');
+
+        overlay.addEventListener('click', () => {
+          overlay.classList.add('opacity-0');
+          overlay.classList.add('pointer-events-none');
+          setTimeout(() => overlay.remove(), 500);
+        });
+      }
+    }, 30);
   </script>
 </body>
 </html>
