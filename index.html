@@ -8,14 +8,38 @@
   <style>
     body {
       background: radial-gradient(circle at top, #1a0000 0%, #0b0000 100%);
+      font-family: 'Segoe UI', sans-serif;
+      cursor: none;
     }
     ::selection { background: #f87171; }
     .laser-text {
       text-shadow: 0 0 6px red, 0 0 10px red;
     }
+    #custom-cursor {
+      position: fixed;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: white;
+      pointer-events: none;
+      z-index: 9999;
+      box-shadow: 0 0 5px white, 0 0 15px white;
+    }
+    .particle {
+      position: fixed;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: white;
+      pointer-events: none;
+      opacity: 0.8;
+      z-index: 9998;
+    }
   </style>
 </head>
 <body class="text-white min-h-screen font-sans">
+  <div id="custom-cursor"></div>
+
   <!-- Unified Header Bar -->
   <div class="bg-gradient-to-r from-red-900 via-black to-red-900 p-6 border-b-4 border-red-700 shadow-lg">
     <div class="flex flex-col lg:flex-row justify-between items-center gap-4">
@@ -28,7 +52,7 @@
       </div>
     </div>
     <div class="text-center mt-4 text-lg text-red-300 font-bold">
-      🚀 Roblox may be full of green. New starfighter scripts launching this week.
+      🚀 Transmission: All systems green. New starfighter scripts launching this week.
     </div>
   </div>
 
@@ -76,7 +100,7 @@
             <h2 class="text-2xl font-bold text-red-400 laser-text">${script.title}</h2>
             <p class="text-gray-400 text-md">${script.description}</p>
             <p class="text-sm ${statusColor} font-semibold">Status: ${script.status}</p>
-            <textarea readonly class="bg-black p-3 text-sm rounded-md resize-none w-full h-28 text-white border border-red-600">${script.code}</textarea>
+            <textarea readonly class="bg-black p-3 text-sm rounded-md resize-none w-full h-28 text-white border border-red-600 font-sans">${script.code}</textarea>
             <button data-index="${index}" class="copyBtn mt-2 bg-red-600 hover:bg-red-700 text-white text-sm py-2 px-4 rounded-lg">Copy</button>
             <span id="copied-${index}" class="text-green-400 text-sm mt-1 hidden">Copied!</span>
           `;
@@ -100,6 +124,23 @@
     searchInput.addEventListener('input', e => renderScripts(e.target.value));
 
     renderScripts();
+
+    // Cursor + Particles
+    const cursor = document.getElementById('custom-cursor');
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+      createParticle(e.clientX, e.clientY);
+    });
+
+    function createParticle(x, y) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      p.style.left = x + 'px';
+      p.style.top = y + 'px';
+      document.body.appendChild(p);
+      setTimeout(() => p.remove(), 300);
+    }
   </script>
 </body>
 </html>
