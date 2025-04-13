@@ -9,11 +9,12 @@
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(-45deg, #330000, #660000, #330000, #1a0000);
+      background: linear-gradient(-45deg, #000000, #1a1a1a, #000000, #1a0000);
       background-size: 400% 400%;
       animation: gradientMove 12s ease infinite;
       color: white;
       cursor: none;
+      overflow: hidden;
     }
 
     .animated-header {
@@ -104,6 +105,33 @@
     *:hover {
       cursor: none !important;
     }
+
+    /* Floating and spinning stars */
+    .star {
+      position: absolute;
+      background-color: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: floatAndSpin 15s infinite linear;
+    }
+
+    @keyframes floatAndSpin {
+      0% {
+        transform: translateY(-10px) rotate(0deg);
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+      }
+    }
+
+    .main-background {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      background: linear-gradient(to bottom, #000, #333);
+      overflow: hidden;
+    }
+
   </style>
 </head>
 <body class="min-h-screen text-white font-sans">
@@ -121,7 +149,7 @@
   </div>
 
   <!-- Main Content -->
-  <div id="mainContent" class="hidden">
+  <div id="mainContent" class="hidden main-background">
     <div class="animated-header p-6 border-b-4 border-red-700 shadow-2xl">
       <div class="flex flex-col lg:flex-row justify-between items-center gap-6">
         <div class="flex flex-col gap-1">
@@ -145,6 +173,21 @@
   </div>
 
   <script>
+    // Create random stars
+    const mainBackground = document.querySelector('.main-background');
+    const numberOfStars = 100;
+
+    for (let i = 0; i < numberOfStars; i++) {
+      const star = document.createElement('div');
+      star.classList.add('star');
+      star.style.width = Math.random() * 3 + 'px';
+      star.style.height = star.style.width;
+      star.style.top = Math.random() * 100 + 'vh';
+      star.style.left = Math.random() * 100 + 'vw';
+      star.style.animationDuration = (Math.random() * 10 + 10) + 's';
+      mainBackground.appendChild(star);
+    }
+
     const cursor = document.getElementById('custom-cursor');
     document.addEventListener('mousemove', e => {
       cursor.style.left = e.clientX + 'px';
@@ -189,7 +232,7 @@
         }, { once: true });
       }
     }, 30);
-
+    
     const scripts = [
       {
         title: "Arise Crossover",
@@ -249,7 +292,6 @@ Use good exc to not get detected.`,
       }
     ];
     
-
     const container = document.getElementById('scriptContainer');
     const searchInput = document.getElementById('searchInput');
 
@@ -267,9 +309,8 @@ Use good exc to not get detected.`,
             <h2 class="text-2xl font-bold laser-text mb-1">${script.title}</h2>
             <p class="text-gray-300">${script.description}</p>
             <p class="text-sm ${statusColor} mt-1">Status: ${script.status}</p>
-            <textarea readonly class="bg-zinc-900 p-3 mt-3 rounded-md text-sm text-white w-full h-28 border border-red-600 resize-none font-mono">${script.code}</textarea>
-            <button data-index="${index}" class="copyBtn mt-3 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg shadow-lg">Copy Script</button>
-            <span id="copied-${index}" class="text-green-400 text-sm mt-1 hidden block">Copied!</span>
+            <textarea readonly class="bg-zinc-900 p-3 mt-3 rounded-md text-sm text-white w-full h-16">${script.code}</textarea>
+            <button onclick="runScript(${index})" class="mt-4 bg-red-600 text-white py-2 px-4 rounded-lg w-full hover:bg-red-700 transition">Run Script</button>
           `;
           container.appendChild(card);
         });
