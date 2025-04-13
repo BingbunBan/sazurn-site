@@ -111,25 +111,30 @@
     // Progress bar logic (3 seconds to fill)
     setTimeout(function() {
       progressBar.style.width = "100%";
-      setTimeout(function() {
-        loadingScreen.style.display = "none"; // Hide loading screen
-        mainScreen.style.display = "block"; // Show main screen
-      }, 500); // Delay before showing the main screen
     }, 100); // Initial delay for the loading screen
 
-    // Redirect to the main screen when clicked anywhere
+    // Listen for clicks on the page to transition to the main screen
     document.body.addEventListener("click", function() {
-      if (loadingScreen.style.display !== "none") {
-        progressBar.style.width = "100%"; // Make sure the bar completes
-        setTimeout(function() {
-          loadingScreen.style.display = "none"; // Hide loading screen
-          mainScreen.style.display = "block"; // Show main screen
-        }, 500); // Allow the bar to finish before showing the main screen
+      // Make sure loading screen disappears after click and bar is complete
+      if (progressBar.style.width === "100%") {
+        loadingScreen.style.display = "none"; // Hide loading screen
+        mainScreen.style.display = "block"; // Show main screen
       }
     });
+
+    // After progress bar completes, allow the click to transition to main screen
+    setTimeout(function() {
+      // Hide loading screen once progress is done
+      if (progressBar.style.width === "100%") {
+        loadingScreen.style.display = "none"; 
+        mainScreen.style.display = "block";
+      }
+    }, 3500); // Delay to ensure full transition
+
   </script>
 </body>
 </html>
+
 
 <!DOCTYPE html>
 <html lang="en">
