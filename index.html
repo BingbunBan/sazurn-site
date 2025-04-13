@@ -6,18 +6,19 @@
   <title>Sazurn Hub</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
+    /* Basic page setup */
     body, html {
       height: 100%;
       margin: 0;
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: #1a0000;
       font-family: 'Segoe UI', sans-serif;
       color: white;
       overflow: hidden;
     }
 
+    /* Loading screen styles */
     .loading-screen {
       position: absolute;
       top: 0;
@@ -30,8 +31,10 @@
       flex-direction: column;
       text-align: center;
       z-index: 9999;
+      background-color: #1a0000;
     }
 
+    /* Progress bar container */
     .progress-container {
       width: 80%;
       height: 25px;
@@ -41,6 +44,7 @@
       overflow: hidden;
     }
 
+    /* Progress bar itself */
     .progress-bar {
       width: 1%;
       height: 100%;
@@ -48,96 +52,81 @@
       transition: width 3s ease-in-out;
     }
 
-    .message {
-      font-size: 20px;
-      margin-top: 20px;
+    /* Main screen styles */
+    .main-screen {
+      display: none; /* Initially hidden */
     }
 
-    .main-content {
-      display: none;
-      position: relative;
-      text-align: center;
-      color: white;
-    }
-
-    .main-content h1 {
-      font-size: 5rem;
-      font-weight: bold;
-      color: white;
-    }
-
-    .main-content p {
-      font-size: 1.5rem;
-      margin-top: 20px;
+    .laser-text {
+      text-shadow: 0 0 12px red, 0 0 24px #ff0000;
       color: #ff4d4d;
-      font-weight: bold;
     }
 
-    .continue-btn {
-      margin-top: 30px;
-      padding: 10px 20px;
-      background-color: #ff4d4d;
-      border: none;
-      border-radius: 5px;
-      color: white;
-      font-size: 1.2rem;
-      cursor: pointer;
-    }
-
-    .continue-btn:hover {
-      background-color: #e60000;
-    }
-
-    /* Center the Sazurn Hub text in the middle of the page */
-    .large-text {
-      font-size: 6rem;
-      font-weight: bold;
-      color: white;
-    }
   </style>
 </head>
 <body>
   <!-- Loading Screen -->
-  <div class="loading-screen">
-    <div class="large-text">Sazurn Hub</div>
+  <div id="loadingScreen" class="loading-screen">
+    <h1 class="text-5xl font-extrabold laser-text">Sazurn Hub</h1>
+    <p class="text-lg mt-4">Loading...</p>
     <div class="progress-container">
-      <div class="progress-bar"></div>
+      <div id="progressBar" class="progress-bar"></div>
     </div>
-    <div class="message">Sazurn Hub ready to Broke Roblox</div>
-    <div class="message">Click to Continue...</div>
+    <p id="loadingText" class="mt-4">Sazurn Hub ready to Broke Roblox</p>
+    <p class="mt-2">Click to Continue...</p>
   </div>
 
-  <!-- Main Content (hidden initially) -->
-  <div class="main-content">
-    <h1>Sazurn Hub</h1>
-    <p>Welcome to the Sazurn Hub! Let's start scripting!</p>
-    <button class="continue-btn" onclick="startApp()">Start</button>
+  <!-- Main Screen (content) -->
+  <div id="mainScreen" class="main-screen">
+    <div class="animated-header p-6 border-b-4 border-red-700 shadow-2xl">
+      <div class="flex flex-col lg:flex-row justify-between items-center gap-6">
+        <div class="flex flex-col gap-1">
+          <h1 class="text-5xl font-extrabold laser-text">Sazurn Hub</h1>
+          <p class="text-base text-red-400 font-medium">⚡ Powered by the <span class="font-semibold">Sazurn Hub</span> team — May the scripts be with you.</p>
+          <p class="text-lg">Join our Discord for updates!
+            <a href="https://discord.gg/hF8B9k8aed" target="_blank" class="discord-link ml-1">https://discord.gg/hF8B9k8aed</a>
+          </p>
+        </div>
+        <div class="w-full lg:w-1/2">
+          <input id="searchInput" type="text" placeholder="🔍 Search galactic scripts..."
+            class="w-full px-5 py-3 rounded-xl bg-gray-950 text-white placeholder-gray-400 text-lg focus:outline-none focus:ring-2 focus:ring-red-500 shadow-lg" />
+        </div>
+      </div>
+      <div class="text-center mt-4 text-xl font-bold laser-text text-red-500">
+        🚀 Transmission: All systems green. New starfighter scripts launching this week.
+      </div>
+    </div>
+    <div id="scriptContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-8 py-12">
+      <!-- Dynamic Cards -->
+    </div>
   </div>
 
   <script>
-    window.onload = function() {
-      // Progress bar animation
-      setTimeout(() => {
-        document.querySelector('.progress-bar').style.width = '100%';
-      }, 100);
+    // Show loading screen and handle progress bar
+    let progressBar = document.getElementById("progressBar");
+    let loadingScreen = document.getElementById("loadingScreen");
+    let mainScreen = document.getElementById("mainScreen");
+    let loadingText = document.getElementById("loadingText");
 
-      // After 3 seconds, show the main content
-      setTimeout(() => {
-        document.querySelector('.loading-screen').style.display = 'none';
-        document.querySelector('.main-content').style.display = 'block';
-      }, 3000);
-    };
+    // Progress bar logic (3 seconds to fill)
+    setTimeout(function() {
+      progressBar.style.width = "100%";
+      setTimeout(function() {
+        loadingScreen.style.display = "none"; // Hide loading screen
+        mainScreen.style.display = "block"; // Show main screen
+      }, 500); // Delay before showing the main screen
+    }, 100); // Initial delay for the loading screen
 
-    // When the user clicks anywhere on the screen
-    document.body.addEventListener('click', function() {
-      document.querySelector('.loading-screen').style.display = 'none';
-      document.querySelector('.main-content').style.display = 'block';
+    // Redirect to the main screen when clicked anywhere
+    document.body.addEventListener("click", function() {
+      if (loadingScreen.style.display !== "none") {
+        progressBar.style.width = "100%"; // Make sure the bar completes
+        setTimeout(function() {
+          loadingScreen.style.display = "none"; // Hide loading screen
+          mainScreen.style.display = "block"; // Show main screen
+        }, 500); // Allow the bar to finish before showing the main screen
+      }
     });
-
-    // When the user clicks "Continue"
-    function startApp() {
-      alert('Sazurn Hub is now ready!');
-    }
   </script>
 </body>
 </html>
