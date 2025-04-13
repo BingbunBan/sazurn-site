@@ -95,6 +95,7 @@
 </head>
 <body class="min-h-screen text-white font-sans">
   <div id="custom-cursor"></div>
+  <!-- Re-added SoundCloud player (hidden for auto-play) -->
   <iframe width="0" height="0" style="display:none;" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1646784432&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false"></iframe>
 
   <div id="loadingScreen" class="fixed inset-0 flex flex-col items-center justify-center bg-black z-50">
@@ -214,48 +215,46 @@
         title: "Squid Game X",
         description: "—",
         status: "Working",
-        code: `loadstring(game:HttpGet("https://raw.githubusercontent.com/eldiazzz/Squid-Game-X/4f0c4d7a1f7a54b8056d3d549636b29358b8545d/Squid%20Game%20X"))()`
-      },
-      {
-        title: "MIMIC",
-        description: "—",
-        status: "Working",
-        code: `loadstring(game:HttpGet("https://raw.githubusercontent.com/eldiazzz/mimicShit/c5897ae79ee9bc2df00c22b0aeb2d60862808961/Mimic"))()`
-      },
-      {
-        title: "RF FREE",
-        description: "—",
-        status: "Patched",
-        code: `loadstring(game:HttpGet("https://raw.githubusercontent.com/eldiazzz/Sazurn-Hub-Free-Version/refs/heads/main/SAZURN%20FREE%20VERSION"))()`
+        code: `loadstring(game:HttpGet("https://raw.githubusercontent.com/eldiazzz/Squid-Game-X/4f0e6e295f556c9eb2548e84f768e350c5101390/main.lua"))()`
       }
     ];
 
-    const container = document.getElementById('scriptContainer');
-    const searchInput = document.getElementById('searchInput');
+    const scriptContainer = document.getElementById("scriptContainer");
 
-    function renderScripts(filter = '') {
-      container.innerHTML = '';
-      scripts
-        .filter(s => s.title.toLowerCase().includes(filter.toLowerCase()) || s.description.toLowerCase().includes(filter.toLowerCase()))
-        .forEach(script => {
-          const card = document.createElement('div');
-          card.className = "bg-black/60 backdrop-blur-xl border border-red-700 rounded-2xl p-6 shadow-2xl hover:scale-[1.02] transition-transform duration-300";
+    scripts.forEach(script => {
+      const scriptCard = document.createElement("div");
+      scriptCard.classList.add("p-6", "rounded-lg", "bg-gray-800", "shadow-xl", "text-center", "space-y-4");
 
-          const statusColor = script.status === 'Working' ? 'text-green-400' : script.status === 'Patched' ? 'text-red-400' : 'text-yellow-400';
+      const title = document.createElement("h2");
+      title.classList.add("text-2xl", "font-semibold", "laser-text");
+      title.textContent = script.title;
 
-          card.innerHTML = `
-            <h2 class="text-2xl font-bold laser-text">${script.title}</h2>
-            <p class="mt-2 whitespace-pre-line">${script.description}</p>
-            <p class="mt-2 font-semibold ${statusColor}">Status: ${script.status}</p>
-            <pre class="mt-4 bg-black/40 p-3 rounded-xl text-sm whitespace-pre-wrap break-all">${script.code}</pre>
-            <button onclick="navigator.clipboard.writeText(\`${script.code}\`)" class="mt-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl shadow-md">Copy Code</button>
-          `;
-          container.appendChild(card);
-        });
-    }
+      const description = document.createElement("p");
+      description.classList.add("text-lg", "text-red-400");
+      description.textContent = script.description;
 
-    searchInput.addEventListener('input', e => renderScripts(e.target.value));
-    renderScripts();
+      const status = document.createElement("p");
+      status.classList.add("text-lg", "font-bold");
+      status.textContent = `Status: ${script.status}`;
+
+      const codeButton = document.createElement("button");
+      codeButton.classList.add("w-full", "py-2", "px-4", "bg-red-600", "text-white", "rounded-lg", "font-semibold");
+      codeButton.textContent = "Copy Script";
+      codeButton.addEventListener("click", () => {
+        navigator.clipboard.writeText(script.code);
+        codeButton.textContent = "Copied!";
+        setTimeout(() => {
+          codeButton.textContent = "Copy Script";
+        }, 2000);
+      });
+
+      scriptCard.appendChild(title);
+      scriptCard.appendChild(description);
+      scriptCard.appendChild(status);
+      scriptCard.appendChild(codeButton);
+
+      scriptContainer.appendChild(scriptCard);
+    });
   </script>
 </body>
 </html>
