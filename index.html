@@ -6,23 +6,23 @@
   <title>Sazurn Hub</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(-45deg, #000000, #333333, #000000, #1a1a1a);
-  background-size: 400% 400%;
-  animation: gradientMove 12s ease infinite;
-  color: white;  /* Text color set to white for visibility */
-  height: 100vh; /* Ensures it takes up the full screen height */
-  width: 100vw;  /* Ensures it takes up the full screen width */
-  cursor: none;
-}
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(-45deg, #000000, #333333, #000000, #1a1a1a);
+      background-size: 400% 400%;
+      animation: gradientMove 12s ease infinite;
+      color: white;
+      height: 100vh;
+      width: 100vw;
+      cursor: none;
+    }
 
-@keyframes gradientMove {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
 
     ::selection {
       background: #ff4d4d;
@@ -100,14 +100,25 @@ body {
     *:hover {
       cursor: none !important;
     }
+
+    #discord-link img {
+      width: 50px;
+      height: auto;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    #discord-link img:hover {
+      transform: scale(1.1);
+    }
   </style>
 </head>
 <body class="min-h-screen text-white font-sans">
-    <div id="custom-cursor"></div>
+  <div id="custom-cursor"></div>
 
   <iframe id="bg-music" width="0" height="0" style="display:none;" allow="autoplay" 
-src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1646784432&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false">
-</iframe>
+  src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1646784432&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false">
+  </iframe>
 
   <div id="loadingScreen" class="fixed inset-0 flex flex-col items-center justify-center bg-black z-50">
     <h1 class="text-6xl font-extrabold laser-text mb-8">Sazurn Hub</h1>
@@ -125,10 +136,10 @@ src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/16
       <div class="flex flex-col lg:flex-row justify-between items-center gap-6">
         <div class="flex flex-col gap-1">
           <h1 class="text-5xl font-extrabold laser-text">Sazurn Hub</h1>
-<p class="text-base text-red-400 font-medium font-bold">⚡ Powered by the <span class="font-semibold">Sazurn Hub</span> team — May the scripts be with you.</p>
-<p class="text-lg font-bold">Join our Discord for updates!
-  <a href="https://discord.gg/hF8B9k8aed" target="_blank" class="discord-link ml-1">https://discord.gg/hF8B9k8aed</a>
-</p>
+          <p class="text-base text-red-400 font-medium font-bold">⚡ Powered by the <span class="font-semibold">Sazurn Hub</span> team — May the scripts be with you.</p>
+          <a href="https://discord.com" target="_blank" id="discord-link">
+            <img src="https://static.vecteezy.com/system/resources/previews/018/930/718/non_2x/discord-logo-discord-icon-transparent-free-png.png" alt="Discord" id="discord-icon">
+  </a>
         </div>
         <div class="w-full lg:w-1/2">
           <input id="searchInput" type="text" placeholder="🔍 Search Sazurn scripts..."
