@@ -206,25 +206,25 @@
       },
       {
         title: "FLC",
-        description: "Paid Script. Create a Ticket in discord to buy",
+        description: "Paid Script. Create a Ticket in discord to buy.",
         status: "Working",
         code: `loadstring(game:HttpGet("https://raw.githubusercontent.com/BingbunBan/sazurnhub/refs/heads/main/SazurnHubFLC"))()`
       },
       {
         title: "Squid Game X",
-        description: "No key required.",
+        description: "—",
         status: "Working",
         code: `loadstring(game:HttpGet("https://raw.githubusercontent.com/eldiazzz/Squid-Game-X/4f0c4d7a1f7a54b8056d3d549636b29358b8545d/Squid%20Game%20X"))()`
       },
       {
         title: "MIMIC",
-        description: "No key required.",
+        description: "—",
         status: "Working",
         code: `loadstring(game:HttpGet("https://raw.githubusercontent.com/eldiazzz/mimicShit/c5897ae79ee9bc2df00c22b0aeb2d60862808961/Mimic"))()`
       },
       {
         title: "RF FREE",
-        description: "No key required.",
+        description: "—",
         status: "Patched",
         code: `loadstring(game:HttpGet("https://raw.githubusercontent.com/eldiazzz/Sazurn-Hub-Free-Version/refs/heads/main/SAZURN%20FREE%20VERSION"))()`
       }
@@ -248,8 +248,8 @@
             <p class="mt-2 whitespace-pre-line">${script.description}</p>
             <p class="mt-2 font-semibold ${statusColor}">Status: ${script.status}</p>
             <pre class="mt-4 bg-black/40 p-3 rounded-xl text-sm whitespace-pre-wrap break-all">${script.code}</pre>
+            <button onclick="navigator.clipboard.writeText(\`${script.code}\`)" class="mt-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl shadow-md">Copy Code</button>
           `;
-
           container.appendChild(card);
         });
     }
