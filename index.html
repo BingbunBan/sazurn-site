@@ -15,23 +15,28 @@
       color: white;
       cursor: none;
     }
+
     .animated-header {
       background: linear-gradient(-45deg, #330000, #660000, #330000, #1a0000);
       background-size: 400% 400%;
       animation: gradientMove 12s ease infinite;
     }
+
     @keyframes gradientMove {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
+
     ::selection {
       background: #ff4d4d;
     }
+
     .laser-text {
       text-shadow: 0 0 12px red, 0 0 24px #ff0000;
       color: #ff4d4d;
     }
+
     #custom-cursor {
       position: fixed;
       width: 14px;
@@ -42,6 +47,7 @@
       z-index: 9999;
       box-shadow: 0 0 8px white, 0 0 15px red;
     }
+
     .particle {
       position: fixed;
       width: 6px;
@@ -53,12 +59,14 @@
       z-index: 9998;
       animation: fall 1.5s linear forwards;
     }
+
     @keyframes fall {
       to {
         transform: translateY(80px);
         opacity: 0;
       }
     }
+
     .dust {
       position: absolute;
       width: 4px;
@@ -68,19 +76,23 @@
       opacity: 0.8;
       animation: dustMove 3s linear infinite;
     }
+
     @keyframes dustMove {
       0% { transform: translateY(0); opacity: 1; }
       100% { transform: translateY(-40px); opacity: 0; }
     }
+
     .discord-link {
       color: #f87171;
       text-decoration: underline;
       transition: all 0.3s ease-in-out;
       display: inline-block;
     }
+
     .discord-link:hover {
       animation: diagonalShake 0.4s ease-in-out;
     }
+
     @keyframes diagonalShake {
       0% { transform: translate(0, 0); }
       25% { transform: translate(3px, 3px); }
@@ -88,6 +100,7 @@
       75% { transform: translate(2px, 2px); }
       100% { transform: translate(0, 0); }
     }
+
     *:hover {
       cursor: none !important;
     }
@@ -95,9 +108,8 @@
 </head>
 <body class="min-h-screen text-white font-sans">
   <div id="custom-cursor"></div>
-  <!-- Re-added SoundCloud player (hidden for auto-play) -->
-  <iframe width="0" height="0" style="display:none;" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1646784432&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false"></iframe>
 
+  <!-- Loading Screen -->
   <div id="loadingScreen" class="fixed inset-0 flex flex-col items-center justify-center bg-black z-50">
     <h1 class="text-6xl font-extrabold laser-text mb-8">Sazurn Hub</h1>
     <div class="w-2/3 h-5 bg-gray-800 rounded-full overflow-hidden relative">
@@ -108,6 +120,7 @@
     <p id="clickContinue" class="mt-8 text-2xl font-extrabold laser-text hidden">Click to Continue...</p>
   </div>
 
+  <!-- Main Content -->
   <div id="mainContent" class="hidden">
     <div class="animated-header p-6 border-b-4 border-red-700 shadow-2xl">
       <div class="flex flex-col lg:flex-row justify-between items-center gap-6">
@@ -119,13 +132,15 @@
           </p>
         </div>
         <div class="w-full lg:w-1/2">
-          <input id="searchInput" type="text" placeholder="🔍 Search galactic scripts..." class="w-full px-5 py-3 rounded-xl bg-gray-950 text-white placeholder-gray-400 text-lg focus:outline-none focus:ring-2 focus:ring-red-500 shadow-lg" />
+          <input id="searchInput" type="text" placeholder="🔍 Search galactic scripts..."
+            class="w-full px-5 py-3 rounded-xl bg-gray-950 text-white placeholder-gray-400 text-lg focus:outline-none focus:ring-2 focus:ring-red-500 shadow-lg" />
         </div>
       </div>
       <div class="text-center mt-4 text-xl font-bold laser-text text-red-500">
         🪐Roblox may be full of green. New green starfighter scripts launching this week.
       </div>
     </div>
+
     <div id="scriptContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-8 py-12"></div>
   </div>
 
@@ -142,6 +157,7 @@
       setTimeout(() => p.remove(), 1000);
     });
 
+    // Loading animation
     const loadingScreen = document.getElementById('loadingScreen');
     const progressBar = document.getElementById('progressBar');
     const loadingText = document.getElementById('loadingText');
@@ -164,7 +180,7 @@
 
       if (percent >= 100) {
         clearInterval(interval);
-        loadingText.innerHTML = '<span class="laser-text text-2xl">Sazurn Hub ready to Break Roblox</span>';
+        loadingText.innerHTML = '<span class="laser-text text-2xl">Sazurn Hub ready to Broke Roblox</span>';
         clickContinue.classList.remove('hidden');
         document.body.addEventListener('click', () => {
           loadingScreen.classList.add('hidden');
@@ -177,84 +193,94 @@
     const scripts = [
       {
         title: "Arise Crossover",
-        description: "Key : AriseSAZURNZZ",
+        description: `Key : AriseSAZURNZZ`,
         status: "Working",
         code: `loadstring(game:HttpGet("https://raw.githubusercontent.com/BingbunBan/sazurnhub/refs/heads/main/SazurnHubARISE"))()`
       },
       {
         title: "The Classic Soccer",
-        description: "Key 1 : SAZURNTCSGG\nKey 2 : SazurnSan",
+        description: `Key 1 : SAZURNTCSGG
+Key 2 : SazurnSan`,
         status: "Working",
         code: `loadstring(game:HttpGet("https://raw.githubusercontent.com/BingbunBan/sazurnhub/refs/heads/main/SazurnHubTCL"))()`
       },
       {
         title: "Basketball Zero",
-        description: "Key : SAZURN25ONTOP",
+        description: `Key : SAZURN25ONTOP`,
         status: "Working",
         code: `loadstring(game:HttpGet("https://raw.githubusercontent.com/BingbunBan/sazurnhub/refs/heads/main/SazurnHubBZ"))()`
       },
       {
         title: "Fisch",
-        description: "Key 1 : simonclaw>timcheese",
+        description: `Key 1 : simonclaw>timcheese`,
         status: "Working",
         code: `loadstring(game:HttpGet("https://raw.githubusercontent.com/BingbunBan/sazurnhub/refs/heads/main/SazurnHubFISCH"))()`
       },
       {
         title: "DaHood",
-        description: "Key : v53lGTy24cRQy5gij3V.\nUse good exc to not get detected.",
+        description: `Key : v53lGTy24cRQy5gij3V.
+Use good exc to not get detected.`,
         status: "Working",
         code: `loadstring(game:HttpGet("https://raw.githubusercontent.com/BingbunBan/sazurnhub/refs/heads/main/SazurnHubDH"))()`
       },
-      {
+      { 
         title: "FLC",
-        description: "Paid Script. Create a Ticket in discord to buy.",
+        description: `Paid Script. Create a Ticket in discord to buy`,
         status: "Working",
         code: `loadstring(game:HttpGet("https://raw.githubusercontent.com/BingbunBan/sazurnhub/refs/heads/main/SazurnHubFLC"))()`
       },
-      {
-        title: "Squid Game X",
-        description: "—",
+      { 
+        title: "Squig Game X",
+        description: ``,
         status: "Working",
-        code: `loadstring(game:HttpGet("https://raw.githubusercontent.com/eldiazzz/Squid-Game-X/4f0e6e295f556c9eb2548e84f768e350c5101390/main.lua"))()`
+        code: `loadstring(game:HttpGet("https://raw.githubusercontent.com/eldiazzz/Squid-Game-X/4f0c4d7a1f7a54b8056d3d549636b29358b8545d/Squid%20Game%20X"))()`
+      },
+      { 
+        title: "MIMIC",
+        description: ``,
+        status: "Working",
+        code:  `loadstring(game:HttpGet("https://raw.githubusercontent.com/eldiazzz/mimicShit/c5897ae79ee9bc2df00c22b0aeb2d60862808961/Mimic"))()`
       }
     ];
 
-    const scriptContainer = document.getElementById("scriptContainer");
+    const container = document.getElementById('scriptContainer');
+    const searchInput = document.getElementById('searchInput');
 
-    scripts.forEach(script => {
-      const scriptCard = document.createElement("div");
-      scriptCard.classList.add("p-6", "rounded-lg", "bg-gray-800", "shadow-xl", "text-center", "space-y-4");
+    function renderScripts(filter = '') {
+      container.innerHTML = '';
+      scripts
+        .filter(s => s.title.toLowerCase().includes(filter.toLowerCase()) || s.description.toLowerCase().includes(filter.toLowerCase()))
+        .forEach((script, index) => {
+          const card = document.createElement('div');
+          card.className = "bg-black/60 backdrop-blur-xl border border-red-700 rounded-2xl p-6 shadow-2xl hover:scale-[1.02] transition-transform duration-300";
 
-      const title = document.createElement("h2");
-      title.classList.add("text-2xl", "font-semibold", "laser-text");
-      title.textContent = script.title;
+          const statusColor = script.status === 'Working' ? 'text-green-400' : script.status === 'Patched' ? 'text-red-400' : 'text-yellow-400';
 
-      const description = document.createElement("p");
-      description.classList.add("text-lg", "text-red-400");
-      description.textContent = script.description;
+          card.innerHTML = `
+            <h2 class="text-2xl font-bold laser-text mb-1">${script.title}</h2>
+            <p class="text-gray-300">${script.description}</p>
+            <p class="text-sm ${statusColor} mt-1">Status: ${script.status}</p>
+            <textarea readonly class="bg-zinc-900 p-3 mt-3 rounded-md text-sm text-white w-full h-28 border border-red-600 resize-none font-mono">${script.code}</textarea>
+            <button data-index="${index}" class="copyBtn mt-3 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg shadow-lg">Copy</button>
+            <span id="copied-${index}" class="text-green-400 text-sm mt-1 hidden block">Copied!</span>
+          `;
+          container.appendChild(card);
+        });
 
-      const status = document.createElement("p");
-      status.classList.add("text-lg", "font-bold");
-      status.textContent = `Status: ${script.status}`;
-
-      const codeButton = document.createElement("button");
-      codeButton.classList.add("w-full", "py-2", "px-4", "bg-red-600", "text-white", "rounded-lg", "font-semibold");
-      codeButton.textContent = "Copy Script";
-      codeButton.addEventListener("click", () => {
-        navigator.clipboard.writeText(script.code);
-        codeButton.textContent = "Copied!";
-        setTimeout(() => {
-          codeButton.textContent = "Copy Script";
-        }, 2000);
+      document.querySelectorAll('.copyBtn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const index = btn.getAttribute('data-index');
+          navigator.clipboard.writeText(scripts[index].code).then(() => {
+            const copiedText = document.getElementById(`copied-${index}`);
+            copiedText.classList.remove('hidden');
+            setTimeout(() => copiedText.classList.add('hidden'), 1500);
+          });
+        });
       });
+    }
 
-      scriptCard.appendChild(title);
-      scriptCard.appendChild(description);
-      scriptCard.appendChild(status);
-      scriptCard.appendChild(codeButton);
-
-      scriptContainer.appendChild(scriptCard);
-    });
+    searchInput.addEventListener('input', e => renderScripts(e.target.value));
+    renderScripts();
   </script>
 </body>
 </html>
