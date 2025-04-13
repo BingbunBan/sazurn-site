@@ -111,6 +111,31 @@
     #discord-link img:hover {
       transform: scale(1.1);
     }
+
+    .star {
+  position: fixed;
+  width: 4px;
+  height: 4px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.8;
+  pointer-events: none;
+  z-index: 1;
+  animation: floatUp 4s linear forwards;
+  box-shadow: 0 0 6px #fff, 0 0 10px #ff0000;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-100px);
+    opacity: 0;
+  }
+}
+    
   </style>
 </head>
 <body class="min-h-screen text-white font-sans">
