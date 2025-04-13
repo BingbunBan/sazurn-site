@@ -107,27 +107,32 @@
   </style>
 </head>
 <body class="min-h-screen text-white font-sans">
+    <div id="custom-cursor"></div>
+  
+<iframe
+  id="sc-player"
+  width="100%"
+  height="166"
+  scrolling="no"
+  frameborder="no"
+  allow="autoplay"
+  src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1646784432&auto_play=true&show_artwork=false"
+  style="position: absolute; width: 0; height: 0; border: none; overflow: hidden;"
+></iframe>
 
-    <script src="https://w.soundcloud.com/player/api.js"></script>
-
-  <iframe 
-    id="sc-player"
-    src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1646784432&auto_play=false"
-    allow="autoplay"
-    style="display: none;"></iframe>
-
-  <script>
+<script src="https://w.soundcloud.com/player/api.js"></script>
+<script>
+  window.addEventListener('load', () => {
     const iframe = document.getElementById('sc-player');
     const widget = SC.Widget(iframe);
 
-    widget.bind(SC.Widget.Events.READY, function () {
+    widget.bind(SC.Widget.Events.READY, () => {
       widget.setVolume(100);
       widget.play();
     });
-  
-  <div id="custom-cursor"></div>
+  });
+</script>
 
-  <!-- Loading Screen -->
   <div id="loadingScreen" class="fixed inset-0 flex flex-col items-center justify-center bg-black z-50">
     <h1 class="text-6xl font-extrabold laser-text mb-8">Sazurn Hub</h1>
     <div class="w-2/3 h-5 bg-gray-800 rounded-full overflow-hidden relative">
