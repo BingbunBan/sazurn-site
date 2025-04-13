@@ -147,6 +147,20 @@ src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/16
     <div id="scriptContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-8 py-12"></div>
   </div>
 
+<script>
+  function loadMainScreenAudio() {
+    const iframe = document.createElement("iframe");
+    iframe.src = "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1646784432&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false";
+    iframe.allow = "autoplay";
+    iframe.width = "0";
+    iframe.height = "0";
+    iframe.style.display = "none";
+    iframe.id = "bg-music";
+    document.body.appendChild(iframe);
+  }
+</script>
+
+  
   <script>
     const cursor = document.getElementById('custom-cursor');
     document.addEventListener('mousemove', e => {
