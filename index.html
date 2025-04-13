@@ -1,49 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Sazurn Hub</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
       margin: 0;
-      background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #000000);
-      background-size: 400% 400%;
-      animation: gradientBG 15s ease infinite;
       font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(-45deg, #330000, #660000, #330000, #1a0000);
+      background-size: 400% 400%;
+      animation: gradientMove 12s ease infinite;
+      color: white;
       cursor: none;
     }
 
-    @keyframes gradientBG {
-      0% {background-position: 0% 50%;}
-      50% {background-position: 100% 50%;}
-      100% {background-position: 0% 50%;}
+    .animated-header {
+      background: linear-gradient(-45deg, #330000, #660000, #330000, #1a0000);
+      background-size: 400% 400%;
+      animation: gradientMove 12s ease infinite;
     }
 
-    .discord-link {
-      color: #f87171;
-      text-decoration: underline;
-      transition: all 0.3s ease-in-out;
-      display: inline-block;
-    }
-    .discord-link:hover {
-      animation: diagonalShake 0.4s ease-in-out;
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
-    @keyframes diagonalShake {
-      0% { transform: translate(0, 0); }
-      25% { transform: translate(3px, 3px); }
-      50% { transform: translate(-3px, -3px); }
-      75% { transform: translate(2px, 2px); }
-      100% { transform: translate(0, 0); }
+    ::selection {
+      background: #ff4d4d;
     }
-
-    *:hover { cursor: none !important; }
-    ::selection { background: #f87171; }
 
     .laser-text {
-      text-shadow: 0 0 10px red, 0 0 20px red, 0 0 30px #ff0000;
+      text-shadow: 0 0 12px red, 0 0 24px #ff0000;
       color: #ff4d4d;
     }
 
@@ -55,7 +45,7 @@
       background-color: white;
       pointer-events: none;
       z-index: 9999;
-      box-shadow: 0 0 5px white, 0 0 15px white;
+      box-shadow: 0 0 8px white, 0 0 15px red;
     }
 
     .particle {
@@ -76,28 +66,46 @@
         opacity: 0;
       }
     }
+
+    .discord-link {
+      color: #f87171;
+      text-decoration: underline;
+      transition: all 0.3s ease-in-out;
+      display: inline-block;
+    }
+
+    .discord-link:hover {
+      animation: diagonalShake 0.4s ease-in-out;
+    }
+
+    @keyframes diagonalShake {
+      0% { transform: translate(0, 0); }
+      25% { transform: translate(3px, 3px); }
+      50% { transform: translate(-3px, -3px); }
+      75% { transform: translate(2px, 2px); }
+      100% { transform: translate(0, 0); }
+    }
+
+    *:hover {
+      cursor: none !important;
+    }
   </style>
 </head>
-<body class="text-white min-h-screen">
+<body class="min-h-screen text-white font-sans">
   <div id="custom-cursor"></div>
 
-  <!-- Header -->
-  <div class="bg-gradient-to-r from-red-900 via-black to-red-900 p-6 border-b-4 border-red-700 shadow-lg">
-    <div class="flex flex-col lg:flex-row justify-between items-center gap-4">
-      <div class="flex items-center gap-4">
-        <div>
-          <h1 class="text-5xl font-extrabold laser-text drop-shadow-2xl">Sazurn Hub</h1>
-          <p class="text-lg text-red-300 font-semibold tracking-wide mt-2">
-            ⚡ Powered by the <span class="font-bold text-red-400">Sazurn Hub</span> team — May the scripts be with you.
-          </p>
-          <p class="text-2xl text-white font-semibold mt-3">
-            Join our Discord to support us and for recent updates!
-            <a href="https://discord.gg/hF8B9k8aed" target="_blank" class="discord-link ml-2">https://discord.gg/hF8B9k8aed</a>
-          </p>
-        </div>
+  <div class="animated-header p-6 border-b-4 border-red-700 shadow-2xl">
+    <div class="flex flex-col lg:flex-row justify-between items-center gap-6">
+      <div class="flex flex-col gap-1">
+        <h1 class="text-5xl font-extrabold laser-text">Sazurn Hub</h1>
+        <p class="text-base text-red-400 font-medium">⚡ Powered by the <span class="font-semibold">Sazurn Hub</span> team — May the scripts be with you.</p>
+        <p class="text-lg">Join our Discord for updates!
+          <a href="https://discord.gg/hF8B9k8aed" target="_blank" class="discord-link ml-1">https://discord.gg/hF8B9k8aed</a>
+        </p>
       </div>
-      <div class="w-full lg:w-1/2 mt-4 lg:mt-0">
-        <input type="text" id="searchInput" placeholder="🔍 Search galactic scripts..." class="w-full px-5 py-3 rounded-xl bg-gray-950 text-white placeholder-gray-400 text-lg focus:outline-none focus:ring-2 focus:ring-red-500 shadow-md">
+      <div class="w-full lg:w-1/2">
+        <input id="searchInput" type="text" placeholder="🔍 Search galactic scripts..."
+          class="w-full px-5 py-3 rounded-xl bg-gray-950 text-white placeholder-gray-400 text-lg focus:outline-none focus:ring-2 focus:ring-red-500 shadow-lg" />
       </div>
     </div>
     <div class="text-center mt-4 text-xl font-bold laser-text text-red-500">
@@ -105,16 +113,30 @@
     </div>
   </div>
 
-  <!-- Scripts Grid -->
-  <div id="scriptContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-6 py-10">
-    <!-- Cards get injected here -->
+  <div id="scriptContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-8 py-12">
+    <!-- Dynamic Cards -->
   </div>
 
   <script>
     const scripts = [
-      { title: "Force Fly", description: "Ascend like a Jedi across the map.", status: "Working", code: "loadstring(\"-- fly script here\")()" },
-      { title: "Sith ESP", description: "Feel the presence of enemies behind walls.", status: "Patched", code: "loadstring(\"-- esp script\")()" },
-      { title: "Lightsaber Aimbot", description: "Auto-lock saber swings on your foes.", status: "Working", code: "loadstring(\"-- aimbot script\")()" }
+      {
+        title: "Force Fly",
+        description: "Ascend like a Jedi across the map.",
+        status: "Working",
+        code: "loadstring(\"-- fly script here\")()"
+      },
+      {
+        title: "Sith ESP",
+        description: "Feel the presence of enemies behind walls.",
+        status: "Patched",
+        code: "loadstring(\"-- esp script\")()"
+      },
+      {
+        title: "Lightsaber Aimbot",
+        description: "Auto-lock saber swings on your foes.",
+        status: "Working",
+        code: "loadstring(\"-- aimbot script\")()"
+      }
     ];
 
     const container = document.getElementById('scriptContainer');
@@ -122,30 +144,29 @@
 
     function renderScripts(filter = '') {
       container.innerHTML = '';
-      scripts.filter(s => s.title.toLowerCase().includes(filter.toLowerCase()) || s.description.toLowerCase().includes(filter.toLowerCase()))
+      scripts
+        .filter(s => s.title.toLowerCase().includes(filter.toLowerCase()) || s.description.toLowerCase().includes(filter.toLowerCase()))
         .forEach((script, index) => {
           const card = document.createElement('div');
-          card.className = "bg-gray-900 rounded-2xl shadow-2xl p-6 flex flex-col gap-3 border border-red-700 hover:scale-[1.01] transition-transform duration-200";
+          card.className = "bg-black/60 backdrop-blur-xl border border-red-700 rounded-2xl p-6 shadow-2xl hover:scale-[1.02] transition-transform duration-300";
 
           const statusColor = script.status === 'Working' ? 'text-green-400' : script.status === 'Patched' ? 'text-red-400' : 'text-yellow-400';
 
           card.innerHTML = `
-            <h2 class="text-2xl font-bold text-red-400 laser-text">${script.title}</h2>
-            <p class="text-gray-400 text-md">${script.description}</p>
-            <p class="text-sm ${statusColor} font-semibold">Status: ${script.status}</p>
-            <textarea readonly class="bg-black p-3 text-sm rounded-md resize-none w-full h-28 text-white border border-red-600 font-sans">${script.code}</textarea>
-            <button data-index="${index}" class="copyBtn mt-2 bg-red-600 hover:bg-red-700 text-white text-sm py-2 px-4 rounded-lg">Copy</button>
-            <span id="copied-${index}" class="text-green-400 text-sm mt-1 hidden">Copied!</span>
+            <h2 class="text-2xl font-bold laser-text mb-1">${script.title}</h2>
+            <p class="text-gray-300">${script.description}</p>
+            <p class="text-sm ${statusColor} mt-1">Status: ${script.status}</p>
+            <textarea readonly class="bg-zinc-900 p-3 mt-3 rounded-md text-sm text-white w-full h-28 border border-red-600 resize-none font-mono">${script.code}</textarea>
+            <button data-index="${index}" class="copyBtn mt-3 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg shadow-lg">Copy</button>
+            <span id="copied-${index}" class="text-green-400 text-sm mt-1 hidden block">Copied!</span>
           `;
-
           container.appendChild(card);
         });
 
       document.querySelectorAll('.copyBtn').forEach(btn => {
         btn.addEventListener('click', () => {
           const index = btn.getAttribute('data-index');
-          const text = scripts[index].code;
-          navigator.clipboard.writeText(text).then(() => {
+          navigator.clipboard.writeText(scripts[index].code).then(() => {
             const copiedText = document.getElementById(`copied-${index}`);
             copiedText.classList.remove('hidden');
             setTimeout(() => copiedText.classList.add('hidden'), 1500);
@@ -157,7 +178,7 @@
     searchInput.addEventListener('input', e => renderScripts(e.target.value));
     renderScripts();
 
-    // Custom Cursor
+    // Custom cursor + trailing particles
     const cursor = document.getElementById('custom-cursor');
     document.addEventListener('mousemove', e => {
       cursor.style.left = e.clientX + 'px';
