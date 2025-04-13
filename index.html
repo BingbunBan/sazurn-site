@@ -2,250 +2,204 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sazurn Hub</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    * {
+    body {
       margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      user-select: none;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(-45deg, #330000, #660000, #330000, #1a0000);
+      background-size: 400% 400%;
+      animation: gradientMove 12s ease infinite;
+      color: white;
       cursor: none;
     }
-
-    body {
-      background-color: #0a0a0a;
-      font-family: 'Orbitron', sans-serif;
-      color: #ff0000;
-      overflow: hidden;
+    .animated-header {
+      background: linear-gradient(-45deg, #330000, #660000, #330000, #1a0000);
+      background-size: 400% 400%;
+      animation: gradientMove 12s ease infinite;
     }
-
-    #loader {
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    ::selection {
+      background: #ff4d4d;
+    }
+    .laser-text {
+      text-shadow: 0 0 12px red, 0 0 24px #ff0000;
+      color: #ff4d4d;
+    }
+    #custom-cursor {
       position: fixed;
-      width: 100%;
-      height: 100%;
-      background: #000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      z-index: 1000;
-    }
-
-    #progressBar {
-      width: 300px;
-      height: 20px;
-      background: #222;
-      margin-top: 20px;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 0 20px red;
-    }
-
-    #progressFill {
-      height: 100%;
-      width: 0;
-      background: red;
-      animation: fill 3s forwards;
-    }
-
-    @keyframes fill {
-      100% { width: 100%; }
-    }
-
-    h1 {
-      font-size: 3em;
-      color: #ff0000;
-      text-shadow: 0 0 20px red, 0 0 40px red;
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { text-shadow: 0 0 10px red, 0 0 20px red; }
-      50% { text-shadow: 0 0 30px red, 0 0 60px red; }
-    }
-
-    .tab-container {
-      padding: 60px 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .search {
-      margin-bottom: 20px;
-      background: #111;
-      border: none;
-      padding: 10px 20px;
-      color: red;
-      border-radius: 10px;
-      font-size: 1em;
-      outline: none;
-      box-shadow: 0 0 10px red;
-    }
-
-    .tabs {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-    }
-
-    .tab {
-      width: 200px;
-      height: 120px;
-      background: rgba(0, 0, 0, 0.8);
-      border: 2px solid red;
-      box-shadow: 0 0 15px red;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: red;
-      font-size: 1.2em;
-      border-radius: 15px;
-      transition: 0.3s;
-    }
-
-    .tab:hover {
-      box-shadow: 0 0 30px red, 0 0 60px red;
-      transform: scale(1.05);
-    }
-
-    #discord {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      padding: 10px 20px;
-      border-radius: 8px;
-      background: #111;
-      color: red;
-      border: 2px solid red;
-      box-shadow: 0 0 10px red;
-      text-decoration: none;
-      font-size: 1em;
-      transition: all 0.3s ease;
-    }
-
-    #discord:hover {
-      background: red;
-      color: black;
-      box-shadow: 0 0 25px red;
-    }
-
-    #cursor {
-      position: fixed;
-      width: 10px;
-      height: 10px;
-      background: red;
+      width: 14px;
+      height: 14px;
       border-radius: 50%;
+      background-color: white;
       pointer-events: none;
       z-index: 9999;
-      box-shadow: 0 0 10px red, 0 0 20px red;
-      transition: 0.05s;
+      box-shadow: 0 0 8px white, 0 0 15px red;
     }
-
-    canvas#particles {
+    .particle {
       position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 0;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: white;
+      pointer-events: none;
+      opacity: 0.8;
+      z-index: 9998;
+      animation: fall 1.5s linear forwards;
+    }
+    @keyframes fall {
+      to {
+        transform: translateY(80px);
+        opacity: 0;
+      }
+    }
+    .dust {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: red;
+      opacity: 0.8;
+      animation: dustMove 3s linear infinite;
+    }
+    @keyframes dustMove {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-40px); opacity: 0; }
+    }
+    .discord-link {
+      color: #f87171;
+      text-decoration: underline;
+      transition: all 0.3s ease-in-out;
+      display: inline-block;
+    }
+    .discord-link:hover {
+      animation: diagonalShake 0.4s ease-in-out;
+    }
+    @keyframes diagonalShake {
+      0% { transform: translate(0, 0); }
+      25% { transform: translate(3px, 3px); }
+      50% { transform: translate(-3px, -3px); }
+      75% { transform: translate(2px, 2px); }
+      100% { transform: translate(0, 0); }
+    }
+    *:hover {
+      cursor: none !important;
     }
   </style>
 </head>
-<body>
+<body class="min-h-screen text-white font-sans">
+  <div id="custom-cursor"></div>
+  <iframe width="0" height="0" style="display:none;" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1646784432&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false"></iframe>
 
-  <div id="loader">
-    <h1>Loading Sazurn Hub...</h1>
-    <div id="progressBar">
-      <div id="progressFill"></div>
+  <div id="loadingScreen" class="fixed inset-0 flex flex-col items-center justify-center bg-black z-50">
+    <h1 class="text-6xl font-extrabold laser-text mb-8">Sazurn Hub</h1>
+    <div class="w-2/3 h-5 bg-gray-800 rounded-full overflow-hidden relative">
+      <div id="progressBar" class="h-full bg-red-600 laser-text text-transparent transition-all duration-75" style="width: 0%"></div>
+      <div id="dustParticles"></div>
     </div>
+    <p id="loadingText" class="text-xl mt-6 font-bold text-red-400">Loading...</p>
+    <p id="clickContinue" class="mt-8 text-2xl font-extrabold laser-text hidden">Click to Continue...</p>
   </div>
 
-  <canvas id="particles"></canvas>
-  <div id="cursor"></div>
-
-  <div class="tab-container" style="display:none;" id="mainUI">
-    <input type="text" class="search" id="searchInput" placeholder="Search scripts..."/>
-    <div class="tabs" id="tabList">
-      <div class="tab">Speed Boost</div>
-      <div class="tab">Styles</div>
-      <div class="tab">Stats</div>
-      <div class="tab">In Game Stats</div>
-      <div class="tab">Settings</div>
-      <div class="tab">ESP</div>
-      <div class="tab">Key System</div>
-      <div class="tab">Reach Editor</div>
-      <div class="tab">Hitbox Changer</div>
+  <div id="mainContent" class="hidden">
+    <div class="animated-header p-6 border-b-4 border-red-700 shadow-2xl">
+      <div class="flex flex-col lg:flex-row justify-between items-center gap-6">
+        <div class="flex flex-col gap-1">
+          <h1 class="text-5xl font-extrabold laser-text">Sazurn Hub</h1>
+          <p class="text-base text-red-400 font-medium">⚡ Powered by the <span class="font-semibold">Sazurn Hub</span> team — May the scripts be with you.</p>
+          <p class="text-lg">Join our Discord for updates!
+            <a href="https://discord.gg/hF8B9k8aed" target="_blank" class="discord-link ml-1">https://discord.gg/hF8B9k8aed</a>
+          </p>
+        </div>
+        <div class="w-full lg:w-1/2">
+          <input id="searchInput" type="text" placeholder="🔍 Search galactic scripts..." class="w-full px-5 py-3 rounded-xl bg-gray-950 text-white placeholder-gray-400 text-lg focus:outline-none focus:ring-2 focus:ring-red-500 shadow-lg" />
+        </div>
+      </div>
+      <div class="text-center mt-4 text-xl font-bold laser-text text-red-500">
+        🪐Roblox may be full of green. New green starfighter scripts launching this week.
+      </div>
     </div>
+    <div id="scriptContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-8 py-12"></div>
   </div>
-
-  <a id="discord" href="https://discord.gg/yourlink" target="_blank">Join Discord</a>
-
-  <iframe width="0" height="0" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/123456789&auto_play=true&hide_related=false&show_comments=false&show_user=false&show_reposts=false&visual=false" frameborder="no"></iframe>
 
   <script>
-    const loader = document.getElementById("loader");
-    const mainUI = document.getElementById("mainUI");
-
-    window.onload = () => {
-      setTimeout(() => {
-        loader.style.display = "none";
-        mainUI.style.display = "flex";
-      }, 3000);
-    };
-
-    // Search Filter
-    const searchInput = document.getElementById("searchInput");
-    searchInput.addEventListener("input", function () {
-      const filter = searchInput.value.toLowerCase();
-      document.querySelectorAll(".tab").forEach(tab => {
-        tab.style.display = tab.textContent.toLowerCase().includes(filter) ? "flex" : "none";
-      });
-    });
-
-    // Cursor Trail
-    const cursor = document.getElementById('cursor');
+    const cursor = document.getElementById('custom-cursor');
     document.addEventListener('mousemove', e => {
       cursor.style.left = e.clientX + 'px';
       cursor.style.top = e.clientY + 'px';
+      const p = document.createElement('div');
+      p.className = 'particle';
+      p.style.left = e.clientX + 'px';
+      p.style.top = e.clientY + 'px';
+      document.body.appendChild(p);
+      setTimeout(() => p.remove(), 1000);
     });
 
-    // Particles
-    const canvas = document.getElementById('particles');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    const loadingScreen = document.getElementById('loadingScreen');
+    const progressBar = document.getElementById('progressBar');
+    const loadingText = document.getElementById('loadingText');
+    const clickContinue = document.getElementById('clickContinue');
+    const mainContent = document.getElementById('mainContent');
+    const dustParticles = document.getElementById('dustParticles');
 
-    let particles = [];
+    let percent = 0;
+    const interval = setInterval(() => {
+      percent++;
+      progressBar.style.width = percent + '%';
+      loadingText.textContent = `Loading... ${percent}%`;
 
-    for (let i = 0; i < 100; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 2,
-        vy: (Math.random() - 0.5) * 2,
-        size: Math.random() * 2 + 1
-      });
+      const dust = document.createElement('div');
+      dust.className = 'dust';
+      dust.style.left = (percent * 1.8) + '%';
+      dust.style.top = Math.random() * 20 + 'px';
+      dustParticles.appendChild(dust);
+      setTimeout(() => dust.remove(), 1500);
+
+      if (percent >= 100) {
+        clearInterval(interval);
+        loadingText.innerHTML = '<span class="laser-text text-2xl">Sazurn Hub ready to Break Roblox</span>';
+        clickContinue.classList.remove('hidden');
+        document.body.addEventListener('click', () => {
+          loadingScreen.classList.add('hidden');
+          mainContent.classList.remove('hidden');
+          document.body.style.cursor = 'default';
+        }, { once: true });
+      }
+    }, 30);
+
+    const scripts = [/* your script data here as defined */];
+    const container = document.getElementById('scriptContainer');
+    const searchInput = document.getElementById('searchInput');
+
+    function renderScripts(filter = '') {
+      container.innerHTML = '';
+      scripts
+        .filter(s => s.title.toLowerCase().includes(filter.toLowerCase()) || s.description.toLowerCase().includes(filter.toLowerCase()))
+        .forEach(script => {
+          const card = document.createElement('div');
+          card.className = "bg-black/60 backdrop-blur-xl border border-red-700 rounded-2xl p-6 shadow-2xl hover:scale-[1.02] transition-transform duration-300";
+
+          const statusColor = script.status === 'Working' ? 'text-green-400' : script.status === 'Patched' ? 'text-red-400' : 'text-yellow-400';
+
+          card.innerHTML = `
+            <h2 class="text-2xl font-bold laser-text">${script.title}</h2>
+            <p class="mt-2 whitespace-pre-line">${script.description}</p>
+            <p class="mt-2 font-semibold ${statusColor}">Status: ${script.status}</p>
+            <pre class="mt-4 bg-black/40 p-3 rounded-xl text-sm whitespace-pre-wrap break-all">${script.code}</pre>
+          `;
+
+          container.appendChild(card);
+        });
     }
 
-    function animateParticles() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach(p => {
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = 'red';
-        ctx.fill();
-        p.x += p.vx;
-        p.y += p.vy;
-
-        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-      });
-      requestAnimationFrame(animateParticles);
-    }
-
-    animateParticles();
+    searchInput.addEventListener('input', e => renderScripts(e.target.value));
+    renderScripts();
   </script>
 </body>
 </html>
