@@ -57,9 +57,19 @@
       display: none; /* Initially hidden */
     }
 
+    /* Saber (neon) text effect */
     .laser-text {
-      text-shadow: 0 0 12px red, 0 0 24px #ff0000;
+      text-shadow: 0 0 12px red, 0 0 24px #ff0000, 0 0 36px #ff4d4d;
+      font-weight: bold;
       color: #ff4d4d;
+    }
+
+    /* "Click to Continue" message when progress is complete */
+    .click-to-continue {
+      display: none;
+      font-size: 20px;
+      font-weight: bold;
+      margin-top: 15px;
     }
 
   </style>
@@ -68,12 +78,12 @@
   <!-- Loading Screen -->
   <div id="loadingScreen" class="loading-screen">
     <h1 class="text-5xl font-extrabold laser-text">Sazurn Hub</h1>
-    <p class="text-lg mt-4">Loading...</p>
+    <p class="text-lg mt-4 laser-text">Loading...</p>
     <div class="progress-container">
       <div id="progressBar" class="progress-bar"></div>
     </div>
-    <p id="loadingText" class="mt-4">Sazurn Hub ready to Broke Roblox</p>
-    <p class="mt-2">Click to Continue...</p>
+    <p id="loadingText" class="mt-4 laser-text">Sazurn Hub ready to Broke Roblox</p>
+    <p id="clickToContinue" class="click-to-continue laser-text">Click to Continue...</p>
   </div>
 
   <!-- Main Screen (content) -->
@@ -106,34 +116,32 @@
     let progressBar = document.getElementById("progressBar");
     let loadingScreen = document.getElementById("loadingScreen");
     let mainScreen = document.getElementById("mainScreen");
-    let loadingText = document.getElementById("loadingText");
+    let clickToContinue = document.getElementById("clickToContinue");
 
     // Progress bar logic (3 seconds to fill)
     setTimeout(function() {
       progressBar.style.width = "100%";
     }, 100); // Initial delay for the loading screen
 
+    // Show "Click to Continue" when progress bar reaches 100%
+    setTimeout(function() {
+      if (progressBar.style.width === "100%") {
+        clickToContinue.style.display = "block"; // Show click message
+      }
+    }, 3000); // After 3 seconds when the bar is fully loaded
+
     // Listen for clicks on the page to transition to the main screen
     document.body.addEventListener("click", function() {
-      // Make sure loading screen disappears after click and bar is complete
+      // Transition only when progress is 100%
       if (progressBar.style.width === "100%") {
         loadingScreen.style.display = "none"; // Hide loading screen
         mainScreen.style.display = "block"; // Show main screen
       }
     });
-
-    // After progress bar completes, allow the click to transition to main screen
-    setTimeout(function() {
-      // Hide loading screen once progress is done
-      if (progressBar.style.width === "100%") {
-        loadingScreen.style.display = "none"; 
-        mainScreen.style.display = "block";
-      }
-    }, 3500); // Delay to ensure full transition
-
   </script>
 </body>
 </html>
+
 
 
 <!DOCTYPE html>
@@ -235,25 +243,6 @@
 </head>
 <body class="min-h-screen text-white font-sans">
   <div id="custom-cursor"></div>
-
-  <div class="animated-header p-6 border-b-4 border-red-700 shadow-2xl">
-    <div class="flex flex-col lg:flex-row justify-between items-center gap-6">
-      <div class="flex flex-col gap-1">
-        <h1 class="text-5xl font-extrabold laser-text">Sazurn Hub</h1>
-        <p class="text-base text-red-400 font-medium bold-text">⚡ Powered by the <span class="font-semibold">Sazurn Hub</span> team — May the scripts be with you.</p>
-        <p class="text-lg bold-text">Join our Discord for updates!
-          <a href="https://discord.gg/hF8B9k8aed" target="_blank" class="discord-link ml-1">https://discord.gg/hF8B9k8aed</a>
-        </p>
-      </div>
-      <div class="w-full lg:w-1/2">
-        <input id="searchInput" type="text" placeholder="🔍 Search galactic scripts..."
-          class="w-full px-5 py-3 rounded-xl bg-gray-950 text-white placeholder-gray-400 text-lg focus:outline-none focus:ring-2 focus:ring-red-500 shadow-lg" />
-      </div>
-    </div>
-    <div class="text-center mt-4 text-xl font-bold laser-text text-red-500">
-      🚀 Transmission: All systems green. New starfighter scripts launching this week.
-    </div>
-  </div>
 
   <div id="scriptContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-8 py-12">
     <!-- Dynamic Cards -->
