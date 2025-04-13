@@ -339,24 +339,6 @@ Use good exc to not get detected.`,
     
     searchInput.addEventListener('input', e => renderScripts(e.target.value));
     renderScripts();
-
-    <script>
-function spawnStar() {
-  const star = document.createElement('div');
-  star.classList.add('star');
-  star.style.left = `${Math.random() * window.innerWidth}px`;
-  star.style.top = `${Math.random() * window.innerHeight}px`;
-
-  document.body.appendChild(star);
-
-  setTimeout(() => {
-    star.remove();
-  }, 4000); // Match the animation duration
-}
-
-setInterval(spawnStar, 100); // Spawns stars every 100ms
-</script>
-
   </script>
 </body>
 </html>
