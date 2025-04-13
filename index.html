@@ -6,54 +6,54 @@
   <title>Sazurn Hub</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    ::selection { background: #93c5fd; }
-    .fade {
-      transition: opacity 0.3s ease-in-out;
+    body {
+      background: radial-gradient(circle at top, #1a0000 0%, #0b0000 100%);
+    }
+    ::selection { background: #f87171; }
+    .laser-text {
+      text-shadow: 0 0 6px red, 0 0 10px red;
     }
   </style>
 </head>
-<body class="bg-gradient-to-br from-gray-900 to-black text-white min-h-screen font-sans">
-  <!-- Announcement Bar -->
-  <div class="bg-blue-600 text-center py-4 text-xl font-bold shadow-lg">
-    🚀 Welcome to the <span class="text-white">Sazurn Hub</span> — New scripts dropping soon!
-  </div>
-
-  <!-- Header -->
-  <div class="flex justify-between items-center px-6 py-6 border-b border-gray-800 bg-gray-950 shadow-md">
-    <h1 class="text-4xl font-extrabold tracking-wide text-blue-400">Sazurn Hub</h1>
-    <div class="text-right">
-      <p class="text-lg text-white font-semibold">Sazurn Hub team</p>
-      <p class="text-sm text-gray-400 italic">We build. We script. We dominate.</p>
+<body class="text-white min-h-screen font-sans">
+  <!-- Unified Header Bar -->
+  <div class="bg-gradient-to-r from-red-900 via-black to-red-900 p-6 border-b-4 border-red-700 shadow-lg">
+    <div class="flex flex-col lg:flex-row justify-between items-center gap-4">
+      <div>
+        <h1 class="text-5xl font-extrabold laser-text">Sazurn Hub</h1>
+        <p class="text-sm text-red-400 italic">⚡ Powered by the Sazurn Hub team — May the scripts be with you.</p>
+      </div>
+      <div class="w-full lg:w-1/2 mt-4 lg:mt-0">
+        <input type="text" id="searchInput" placeholder="🔍 Search galactic scripts..." class="w-full px-5 py-3 rounded-xl bg-gray-950 text-white placeholder-gray-400 text-lg focus:outline-none focus:ring-2 focus:ring-red-500 shadow-md">
+      </div>
+    </div>
+    <div class="text-center mt-4 text-lg text-red-300 font-bold">
+      🚀 Transmission: All systems green. New starfighter scripts launching this week.
     </div>
   </div>
 
-  <!-- Search -->
-  <div class="px-6 py-6">
-    <input type="text" id="searchInput" placeholder="🔍 Search scripts..." class="w-full px-5 py-3 rounded-xl bg-gray-800 text-white placeholder-gray-400 text-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-  </div>
-
   <!-- Script Cards -->
-  <div id="scriptContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-6 pb-16">
+  <div id="scriptContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-6 py-10">
     <!-- Cards will be injected here -->
   </div>
 
   <script>
     const scripts = [
       {
-        title: "Fly Script",
-        description: "Gives you the ability to fly like a god.",
+        title: "Force Fly",
+        description: "Ascend like a Jedi across the map.",
         status: "Working",
         code: "loadstring(\"-- fly script here\")()"
       },
       {
-        title: "ESP Script",
-        description: "Wallhacks and player tracking.",
+        title: "Sith ESP",
+        description: "Feel the presence of enemies behind walls.",
         status: "Patched",
         code: "loadstring(\"-- esp script\")()"
       },
       {
-        title: "Aimbot Script",
-        description: "Auto-lock on target. For shooters.",
+        title: "Lightsaber Aimbot",
+        description: "Auto-lock saber swings on your foes.",
         status: "Working",
         code: "loadstring(\"-- aimbot script\")()"
       }
@@ -68,16 +68,16 @@
         .filter(s => s.title.toLowerCase().includes(filter.toLowerCase()) || s.description.toLowerCase().includes(filter.toLowerCase()))
         .forEach((script, index) => {
           const card = document.createElement('div');
-          card.className = "bg-gray-800 rounded-2xl shadow-xl p-6 flex flex-col gap-3 border border-gray-700 hover:scale-[1.01] transition-transform duration-200";
+          card.className = "bg-gray-900 rounded-2xl shadow-2xl p-6 flex flex-col gap-3 border border-red-700 hover:scale-[1.01] transition-transform duration-200";
 
           const statusColor = script.status === 'Working' ? 'text-green-400' : script.status === 'Patched' ? 'text-red-400' : 'text-yellow-400';
 
           card.innerHTML = `
-            <h2 class="text-2xl font-bold text-white">${script.title}</h2>
+            <h2 class="text-2xl font-bold text-red-400 laser-text">${script.title}</h2>
             <p class="text-gray-400 text-md">${script.description}</p>
             <p class="text-sm ${statusColor} font-semibold">Status: ${script.status}</p>
-            <textarea readonly class="bg-gray-900 p-3 text-sm rounded-md resize-none w-full h-28 text-white">${script.code}</textarea>
-            <button data-index="${index}" class="copyBtn mt-2 bg-blue-600 hover:bg-blue-700 text-white text-sm py-2 px-4 rounded-lg">Copy</button>
+            <textarea readonly class="bg-black p-3 text-sm rounded-md resize-none w-full h-28 text-white border border-red-600">${script.code}</textarea>
+            <button data-index="${index}" class="copyBtn mt-2 bg-red-600 hover:bg-red-700 text-white text-sm py-2 px-4 rounded-lg">Copy</button>
             <span id="copied-${index}" class="text-green-400 text-sm mt-1 hidden">Copied!</span>
           `;
 
