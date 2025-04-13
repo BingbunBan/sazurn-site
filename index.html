@@ -6,6 +6,150 @@
   <title>Sazurn Hub</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #1a0000;
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
+      overflow: hidden;
+    }
+
+    .loading-screen {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+      z-index: 9999;
+    }
+
+    .progress-container {
+      width: 80%;
+      height: 25px;
+      background-color: #444;
+      border-radius: 12px;
+      margin-top: 30px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      width: 1%;
+      height: 100%;
+      background-color: #ff4d4d;
+      transition: width 3s ease-in-out;
+    }
+
+    .message {
+      font-size: 20px;
+      margin-top: 20px;
+    }
+
+    .main-content {
+      display: none;
+      position: relative;
+      text-align: center;
+      color: white;
+    }
+
+    .main-content h1 {
+      font-size: 5rem;
+      font-weight: bold;
+      color: white;
+    }
+
+    .main-content p {
+      font-size: 1.5rem;
+      margin-top: 20px;
+      color: #ff4d4d;
+      font-weight: bold;
+    }
+
+    .continue-btn {
+      margin-top: 30px;
+      padding: 10px 20px;
+      background-color: #ff4d4d;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    .continue-btn:hover {
+      background-color: #e60000;
+    }
+
+    /* Center the Sazurn Hub text in the middle of the page */
+    .large-text {
+      font-size: 6rem;
+      font-weight: bold;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <!-- Loading Screen -->
+  <div class="loading-screen">
+    <div class="large-text">Sazurn Hub</div>
+    <div class="progress-container">
+      <div class="progress-bar"></div>
+    </div>
+    <div class="message">Sazurn Hub ready to Broke Roblox</div>
+    <div class="message">Click to Continue...</div>
+  </div>
+
+  <!-- Main Content (hidden initially) -->
+  <div class="main-content">
+    <h1>Sazurn Hub</h1>
+    <p>Welcome to the Sazurn Hub! Let's start scripting!</p>
+    <button class="continue-btn" onclick="startApp()">Start</button>
+  </div>
+
+  <script>
+    window.onload = function() {
+      // Progress bar animation
+      setTimeout(() => {
+        document.querySelector('.progress-bar').style.width = '100%';
+      }, 100);
+
+      // After 3 seconds, show the main content
+      setTimeout(() => {
+        document.querySelector('.loading-screen').style.display = 'none';
+        document.querySelector('.main-content').style.display = 'block';
+      }, 3000);
+    };
+
+    // When the user clicks anywhere on the screen
+    document.body.addEventListener('click', function() {
+      document.querySelector('.loading-screen').style.display = 'none';
+      document.querySelector('.main-content').style.display = 'block';
+    });
+
+    // When the user clicks "Continue"
+    function startApp() {
+      alert('Sazurn Hub is now ready!');
+    }
+  </script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sazurn Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
