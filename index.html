@@ -108,30 +108,10 @@
 </head>
 <body class="min-h-screen text-white font-sans">
     <div id="custom-cursor"></div>
-  
-<iframe
-  id="sc-player"
-  width="100%"
-  height="166"
-  scrolling="no"
-  frameborder="no"
-  allow="autoplay"
-  src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1646784432&auto_play=true&show_artwork=false"
-  style="position: absolute; width: 0; height: 0; border: none; overflow: hidden;"
-></iframe>
 
-<script src="https://w.soundcloud.com/player/api.js"></script>
-<script>
-  window.addEventListener('load', () => {
-    const iframe = document.getElementById('sc-player');
-    const widget = SC.Widget(iframe);
-
-    widget.bind(SC.Widget.Events.READY, () => {
-      widget.setVolume(100);
-      widget.play();
-    });
-  });
-</script>
+  <iframe id="bg-music" width="0" height="0" style="display:none;" allow="autoplay" 
+src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1646784432&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false">
+</iframe>
 
   <div id="loadingScreen" class="fixed inset-0 flex flex-col items-center justify-center bg-black z-50">
     <h1 class="text-6xl font-extrabold laser-text mb-8">Sazurn Hub</h1>
